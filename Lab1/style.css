@@ -35,7 +35,6 @@ body{
 .header .header__tilescontainer{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     justify-content: center;
     list-style-type: none;
     overflow: hidden;
@@ -93,9 +92,7 @@ body{
 
 .button{
     transition: all 0.3s ease 0s;
-    background-color: white;
     border-radius: 25px;
-    color: black;
     padding: 15px 32px;
     text-align: center;
     display: block;
@@ -104,9 +101,7 @@ body{
   
 .button:hover{
     transition: all 0.3s ease 0s;
-    background-color: rgb(117, 167, 233);
     border-radius: 25px;
-    color: white;
     padding: 15px 32px;
     text-align: center;
     display: block;
@@ -116,7 +111,7 @@ body{
 .slide{
     width: 100%;
     height: 400px;
-    background-image: url(FirstSlide.jpg);
+    background-image: url(firstslide.jpg);
     background-repeat: no-repeat;
     background-size: 100%;
 }
@@ -129,6 +124,8 @@ body{
 }
 
 .firstslide__button{
+    color: black;
+    background-color: white;
     position: relative;
     width: 120px;
     height: 20px;
@@ -136,6 +133,19 @@ body{
     left:30%;
 }
 
+.firstslide__button:hover{
+    background-color: rgb(19, 112, 233);
+    color: white;
+    position: relative;
+    width: 120px;
+    height: 20px;
+    top: 5%;
+    left:30%;
+}
+
+.pagemiddle{
+    height: 620px;
+}
 
 .pagemiddle__exchangerates{
     color:black;
@@ -181,19 +191,19 @@ body{
 
 .pagemiddle__tiles__firsttile{
     background-repeat: no-repeat;
-    background-image: url(firsttile.jpeg);
+    background-image: url(firsttile.jpg);
     background-size: cover;
 }
 
 
 .pagemiddle__tiles__secondtile{
     transition: all 0.3s ease 0s;
-    background-color:#f5989d;
+    background-color:#d64f4d;
 }
 
 .pagemiddle__tiles__secondtile:hover{
     transition: all 0.3s ease 0s;
-    background-color:#f8686f;
+    background-color:#b64644;
 }
 
 .pagemiddle__tiles__thirdtile{
@@ -209,12 +219,12 @@ body{
 
 .pagemiddle__tiles__fourthtile{
     transition: all 0.3s ease 0s;
-    background-color: #bd8cbf;
+    background-color: rgb(19, 112, 233);
 }
 
 .pagemiddle__tiles__fourthtile:hover{
     transition: all 0.3s ease 0s;
-    background-color: #c55ec8;
+    background-color: rgb(21, 93, 187);
 }
 
 .pagemiddle__tiles__fifthtile{
@@ -222,7 +232,6 @@ body{
     background-image: url(fifthtile.jpg);
     background-size: cover;
 }
-
 
 
 .tile__textwrapper{
@@ -238,8 +247,9 @@ body{
 
 .tile__textwrapper__text{
     line-height: 1.85;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
+
 
 .exchangetable__tableheader{
     color:rgb(19, 112, 233);
@@ -288,3 +298,63 @@ body{
     color: red;
 }
 
+.banknews{
+    text-align: center;
+    width: 100%;
+    height: 430px;
+    background-image: url(newsbg.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.banknews__title{
+    padding-top: 20px;
+    font-size: 40px;
+    color: black;
+    font-weight: lighter;
+}
+
+.banknews__newswrapper{
+    display: flex;
+    flex-direction: row;
+}
+
+.banknews__newswrapper__newsentry:nth-child(1){
+    margin-left: 10%;
+}
+
+.banknews__newswrapper__newsentry{
+    height: 250px;
+    color:black;
+    font-weight: lighter;
+    margin-top:5%;
+    width: 15%;
+    background: white;
+    border-radius: 14px;
+    margin-left: 2%;
+    box-shadow: 1px 1px 1px 1px #b4afae;;
+}
+
+.banknews__newswrapper__newsentry .newsentry__header{
+    color: rgb(19, 112, 233);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.banknews__newswrapper__newsentry .newsentry__main{
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 55%;
+}
+
+.banknews__newswrapper__newsentry .newsentry__button{
+    width: 40%;
+    margin-left: 16%;
+    color:white;
+    background-color: rgb(19, 112, 233);
+}
+
+.banknews__newswrapper__newsentry .newsentry__button:hover{
+    background-color: rgb(217, 231, 248);
+    color:black;
+}
