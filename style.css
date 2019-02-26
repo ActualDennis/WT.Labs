@@ -1,0 +1,290 @@
+body{
+    max-height: 1800px;
+    color:white;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Myriad Pro', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    text-decoration: none;
+}
+
+.reference:link {
+    color: white;
+}
+  
+.reference:visited {
+    color: white;
+}
+  
+.reference:hover {
+    color: white;
+}
+  
+.reference:active {
+    color: white;
+}
+
+
+.header{
+    height: 80px;
+    width: 100%;
+}
+
+.header .header__tilescontainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style-type: none;
+    overflow: hidden;
+    height: 100%;
+    min-width: 60%;
+}
+
+.header__tilescontainer .header__tile{
+    font-size: 17px;
+    height: 100%;
+    float:left;
+    border-left: 1px solid #b4afae;
+    padding: 1%;
+    transition: all 0.3s ease 0s;
+    display: block;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+}
+
+
+
+.header__tilescontainer .header__tile:hover{
+    padding: 1%;
+    transition: all 0.3s ease 0s;
+    display: block;
+    color: rgb(56, 139, 247);
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 1px 1px 1px 1px #b4afae;;
+}
+
+.header__tilescontainer .header__tile:nth-child(1){
+    border-left: none;
+    box-shadow: none;   
+}
+
+.header__tilescontainer .header__tile:nth-child(1):hover{
+    border-left: none; 
+    box-shadow: none; 
+}
+
+.header .header__tile__button{
+    text-align: center;
+}
+
+.header .header__tile__button .button__text{
+    padding-left: 4px;
+    float:left;
+}
+
+.header .header__tile__button .button__icon{
+    float:left;
+}
+
+.button{
+    transition: all 0.3s ease 0s;
+    background-color: white;
+    border-radius: 25px;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    display: block;
+    font-size: 16px;
+  }
+  
+.button:hover{
+    transition: all 0.3s ease 0s;
+    background-color: rgb(117, 167, 233);
+    border-radius: 25px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    display: block;
+    font-size: 16px;
+}
+
+.slide{
+    width: 100%;
+    height: 400px;
+    background-image: url(FirstSlide.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.slide__content .slide__text{
+    position: relative;
+    padding-top: 6%;
+    padding-left: 30%;
+    padding-bottom: 2%;
+}
+
+.firstslide__button{
+    position: relative;
+    width: 120px;
+    height: 20px;
+    top: 5%;
+    left:30%;
+}
+
+
+.pagemiddle__exchangerates{
+    color:black;
+    float:right;
+    padding-right: 10%;
+    padding-top: 2%;
+    height: 60%;
+}
+
+.pagemiddle__exchangerates__title{
+    color:rgb(19, 112, 233);
+    font-weight: lighter;
+    padding-left: 20px;
+    padding-bottom: 2%;
+}
+
+.pagemiddle__exchangerates__table{
+    text-align: left;
+    font-weight: lighter;
+    border-collapse: collapse;
+}
+
+.pagemiddle__tiles{
+    display:table;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: row;
+    height: 100%;
+    width: 65%;
+    float:left;
+}
+
+.pagemiddle__tiles__tile{
+    float:left;
+    color: white;
+    border-radius: 15px;
+    box-shadow: 2px 2px 2px 2px gray;
+    width:30%;
+    margin-top: 5%;
+    margin-left: 1%;
+    max-height: 40%;
+}
+
+.pagemiddle__tiles__firsttile{
+    background-repeat: no-repeat;
+    background-image: url(firsttile.jpeg);
+    background-size: cover;
+}
+
+
+.pagemiddle__tiles__secondtile{
+    transition: all 0.3s ease 0s;
+    background-color:#f5989d;
+}
+
+.pagemiddle__tiles__secondtile:hover{
+    transition: all 0.3s ease 0s;
+    background-color:#f8686f;
+}
+
+.pagemiddle__tiles__thirdtile{
+    background-repeat: no-repeat;
+    background-image: url(thirdtile.jpeg);
+    background-size: cover;
+}
+
+
+.pagemiddle__tiles__tile:nth-child(n + 4){
+    margin-top: 1%;
+}
+
+.pagemiddle__tiles__fourthtile{
+    transition: all 0.3s ease 0s;
+    background-color: #bd8cbf;
+}
+
+.pagemiddle__tiles__fourthtile:hover{
+    transition: all 0.3s ease 0s;
+    background-color: #c55ec8;
+}
+
+.pagemiddle__tiles__fifthtile{
+    background-repeat: no-repeat;
+    background-image: url(fifthtile.jpg);
+    background-size: cover;
+}
+
+
+
+.tile__textwrapper{
+    font-weight: lighter;
+    max-width: 480px;
+    padding: 45px 20px 0 20px;
+}
+
+.tile__textwrapper__header{
+    font-size: 1.14em;
+    margin-bottom: .7em;
+}
+
+.tile__textwrapper__text{
+    line-height: 1.85;
+    margin-bottom: 1rem;
+}
+
+.exchangetable__tableheader{
+    color:rgb(19, 112, 233);
+}
+
+.exchangetable__tableheader,
+.exchangetable__tabledata{
+    border-bottom: 1px solid rgb(19, 112, 233);
+    padding: 20px;
+}
+
+.exchangetable__tablerow{
+    transition: all 0.3s ease 0s;
+}
+
+.exchangetable__tablerow:hover{
+    transition: all 0.3s ease 0s;
+    background-color: rgb(217, 231, 248);
+}
+
+.exchangetable__tableheaderrow:hover{
+    background-color: white;
+}
+
+.exchangetable__tablerow:nth-child(2) .exchangetable__tabledata:nth-child(2){
+    color: red;
+}
+
+.exchangetable__tablerow:nth-child(2) .exchangetable__tabledata:nth-child(3){
+    color: green;
+}
+
+.exchangetable__tablerow:nth-child(3) .exchangetable__tabledata:nth-child(2){
+    color: green;
+}
+
+.exchangetable__tablerow:nth-child(3) .exchangetable__tabledata:nth-child(3){
+    color: green;
+}
+
+.exchangetable__tablerow:nth-child(4) .exchangetable__tabledata:nth-child(2){
+    color: red;
+}
+
+.exchangetable__tablerow:nth-child(4) .exchangetable__tabledata:nth-child(3){
+    color: red;
+}
+
