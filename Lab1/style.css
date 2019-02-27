@@ -27,27 +27,17 @@ body{
 }
 
 
-.header{
-    height: 80px;
-    width: 100%;
-}
-
 .header .header__tilescontainer{
     display: flex;
     flex-direction: row;
     justify-content: center;
     list-style-type: none;
     overflow: hidden;
-    height: 100%;
-    min-width: 60%;
 }
 
 .header__tilescontainer .header__tile{
-    font-size: 17px;
-    height: 100%;
     float:left;
     border-left: 1px solid #b4afae;
-    padding: 1%;
     transition: all 0.3s ease 0s;
     display: block;
     color: black;
@@ -58,7 +48,6 @@ body{
 
 
 .header__tilescontainer .header__tile:hover{
-    padding: 1%;
     transition: all 0.3s ease 0s;
     display: block;
     color: rgb(56, 139, 247);
@@ -82,7 +71,6 @@ body{
 }
 
 .header .header__tile__button .button__text{
-    padding-left: 4px;
     float:left;
 }
 
@@ -92,75 +80,47 @@ body{
 
 .button{
     transition: all 0.3s ease 0s;
-    border-radius: 25px;
-    padding: 15px 32px;
     text-align: center;
     display: block;
-    font-size: 16px;
   }
   
 .button:hover{
     transition: all 0.3s ease 0s;
-    border-radius: 25px;
-    padding: 15px 32px;
     text-align: center;
     display: block;
-    font-size: 16px;
 }
 
 .slide{
-    width: 100%;
-    height: 400px;
     background-image: url(firstslide.jpg);
     background-repeat: no-repeat;
-    background-size: 100%;
 }
 
 .slide__content .slide__text{
     position: relative;
-    padding-top: 6%;
-    padding-left: 30%;
-    padding-bottom: 2%;
 }
 
 .firstslide__button{
     color: black;
     background-color: white;
     position: relative;
-    width: 120px;
-    height: 20px;
-    top: 5%;
-    left:30%;
 }
 
 .firstslide__button:hover{
     background-color: rgb(19, 112, 233);
     color: white;
     position: relative;
-    width: 120px;
-    height: 20px;
-    top: 5%;
-    left:30%;
 }
 
-.pagemiddle{
-    height: 580px;
-}
 
 .pagemiddle__exchangerates{
     color:black;
     float:right;
-    padding-right: 10%;
-    padding-top: 2%;
-    height: 60%;
 }
 
 .exchangerates__title{
     color:rgb(19, 112, 233);
     font-weight: lighter;
-    padding-left: 20px;
-    padding-bottom: 2%;
-}
+ }
 
 .exchangerates__table{
     text-align: left;
@@ -174,19 +134,13 @@ body{
     justify-content: center;
     flex-wrap: wrap;
     flex-direction: row;
-    height: 100%;
     float:left;
 }
 
 .pagemiddle__tiles__tile{
     float:left;
     color: white;
-    border-radius: 15px;
     box-shadow: 2px 2px 2px 2px gray;
-    max-width:30%;
-    margin-top: 1%;
-    margin-left: 1%;
-    max-height: 40%;
 }
 
 .pagemiddle__tiles__firsttile{
@@ -241,32 +195,18 @@ body{
 
 .tile__textwrapper{
     font-weight: lighter;
-    max-width: 480px;
-    padding: 20px 20px 0 20px;
 }
 
-
-.tile__textwrapper__header{
-    font-size: 1.14em;
-    margin-bottom: .7em;
-}
-
-.tile__textwrapper__text{
-    line-height: 1.85;
-    margin-bottom: .7rem;
-}
 
 
 .exchangetable__tableheader{
     color:rgb(19, 112, 233);
-    font-size: 14px;
 }
 
 
 .exchangetable__tableheader,
 .exchangetable__tabledata{
     border-bottom: 1px solid rgb(19, 112, 233);
-    padding: 15px;
 }
 
 .exchangetable__tablerow:nth-child(4) .exchangetable__tabledata{
@@ -313,57 +253,40 @@ body{
 
 .banknews{
     text-align: center;
-    width: 100%;
-    max-height: 600px;
     background-image: url(newsbg.png);
     background-repeat: no-repeat;
 }
 
 .banknews__title{
-    padding-top: 10px;
-    font-size: 40px;
     color: black;
     font-weight: lighter;
 }
 
 .banknews__newswrapper{
-    display: flex;
+    display:flex;
+    align-content: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
     flex-direction: row;
+    background-image: inherit;
+    float:left;
 }
 
 
 .banknews__newswrapper__newsentry{
-    height: 300px;
     color:black;
     font-weight: lighter;
-    margin-top:2%;
-    width: 33%;
     background: white;
-    border-radius: 14px;
-    margin-left: 2%;
     box-shadow: 1px 1px 1px 1px #b4afae;;
 }
 
-.banknews__newswrapper__newsentry--exchangerates{
-    margin-right: 2%;
-    width: 25%;
-}
 
 .banknews__newswrapper__newsentry .newsentry__header{
     color: rgb(19, 112, 233);
-    padding-top: 20px;
-    padding-bottom: 20px;
 }
 
-.banknews__newswrapper__newsentry .newsentry__main{
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 55%;
-}
 
 .banknews__newswrapper__newsentry .newsentry__button{
-    width: 40%;
-    margin-left: 16%;
     color:white;
     background-color: rgb(19, 112, 233);
 }

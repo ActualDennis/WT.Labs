@@ -6,14 +6,20 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>NotARealBank</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" media="(min-width: 890px)" href="style_over890px.css">
+  <link rel="stylesheet" media="(min-width: 600px) and (max-width: 889px)" href="style_600_889px.css">
+  <link rel="stylesheet" media="(min-width: 320px) and (max-width: 599px)" href="style_320_600px.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 <body>
   <nav class="header">
     <ul class="header__tilescontainer">
-      <li class="header__tile header__logo"><a href= "https://google.com"><img src="Logo.png" id="MainLogo"></img></a></li>
+      <li class="header__tile header__logowrapper">
+        <a class="header__logoreference" href= "https://google.com">
+        </a>
+      </li>
       <li class="header__tile">
-        <div class="ButtonWithIcon">
+        <div class="header__buttonwithicon">
             <i class="fas fa-info-circle button__icon"></i>
             <a class="button__text">О Банке</a>
         </div>
@@ -124,7 +130,38 @@
   <section class="banknews">
     <h1 class="banknews__title">Последние новости</h1>
 
-    <div class="banknews__newswrapper">
+  <div class="banknews__newswrapper">
+    
+      <div class="banknews__newswrapper__newsentry banknews__newswrapper__newsentry--exchangerates">
+          <h2 class="exchangerates__title">Курсы обмена</h2>
+    
+          <table class="exchangerates__table">
+            <tbody class="exchangetable__tablebody">
+                <tr class="exchangetable__tablerow exchangetable__tableheaderrow">
+                    <th class="exchangetable__tableheader">Валюта</th>
+                    <th class="exchangetable__tableheader">Курс продажи</th>
+                    <th class="exchangetable__tableheader">Курс покупки</th>
+                  </tr>
+          
+                  <tr class="exchangetable__tablerow">
+                    <td class="exchangetable__tabledata">USD</td>
+                    <td class="exchangetable__tabledata">2.28</td>
+                    <td class="exchangetable__tabledata">2.10</td>
+                  </tr>
+                  <tr class="exchangetable__tablerow">
+                      <td class="exchangetable__tabledata">EUR</td>
+                      <td class="exchangetable__tabledata">3.50</td>
+                      <td class="exchangetable__tabledata">3.20</td>
+                    </tr>
+                  <tr class="exchangetable__tablerow">
+                      <td class="exchangetable__tabledata">UAN</td>
+                      <td class="exchangetable__tabledata">1</td>
+                      <td class="exchangetable__tabledata">0.3</td>
+                    </tr>
+            </tbody>
+          </table>
+      </div>
+
       <div class="banknews__newswrapper__newsentry">
         <h4 class="newsentry__header">Курс BYN вырос до...</h4>
         <article class="newsentry__main">
@@ -155,35 +192,26 @@
           </div>
       </div>
 
-      <div class="banknews__newswrapper__newsentry banknews__newswrapper__newsentry--exchangerates">
-          <h2 class="exchangerates__title">Курсы обмена</h2>
-    
-          <table class="exchangerates__table">
-            <tbody class="exchangetable__tablebody">
-                <tr class="exchangetable__tablerow exchangetable__tableheaderrow">
-                    <th class="exchangetable__tableheader">Валюта</th>
-                    <th class="exchangetable__tableheader">Курс продажи</th>
-                    <th class="exchangetable__tableheader">Курс покупки</th>
-                  </tr>
-          
-                  <tr class="exchangetable__tablerow">
-                    <td class="exchangetable__tabledata">USD</td>
-                    <td class="exchangetable__tabledata">2.28</td>
-                    <td class="exchangetable__tabledata">2.10</td>
-                  </tr>
-                  <tr class="exchangetable__tablerow">
-                      <td class="exchangetable__tabledata">EUR</td>
-                      <td class="exchangetable__tabledata">3.50</td>
-                      <td class="exchangetable__tabledata">3.20</td>
-                    </tr>
-                  <tr class="exchangetable__tablerow">
-                      <td class="exchangetable__tabledata">UAN</td>
-                      <td class="exchangetable__tabledata">1</td>
-                      <td class="exchangetable__tabledata">0.3</td>
-                    </tr>
-            </tbody>
-          </table>
+      <div class="banknews__newswrapper__newsentry">
+        <h4 class="newsentry__header">USD продолжает пад...</h4>
+        <article class="newsentry__main">
+            Американский доллар продолжает падать. На сегодняшний день прогнозируемый курс к составляет 0.00001 BYN за 1 USD.
+        </article>
+        <div class="button newsentry__button">
+            <span>Подробнее...</span>
+        </div>
+    </div>
+
+    <div class="banknews__newswrapper__newsentry">
+      <h4 class="newsentry__header">USD продолжает пад...</h4>
+      <article class="newsentry__main">
+          Американский доллар продолжает падать. На сегодняшний день прогнозируемый курс к составляет 0.00001 BYN за 1 USD.
+      </article>
+      <div class="button newsentry__button">
+          <span>Подробнее...</span>
       </div>
+  </div>
+
     </div>
   </section>
 
