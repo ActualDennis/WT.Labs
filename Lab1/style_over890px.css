@@ -148,7 +148,7 @@ body{
 
 .banknews{
     width: 100%;
-    max-height: 600px;
+    min-height: 700px;
 }
 
 .banknews__title{

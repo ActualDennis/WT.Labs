@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>NotARealBank</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" media="(min-width: 957px)" href="style_over957px.css">
+  <link rel="stylesheet" media="(min-width: 600px) and (max-width: 957px)" href="style_600_957px.css">
+  <link rel="stylesheet" media="(min-width: 320px) and (max-width: 599px)" href="style_320_600px.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+</head>
+<body>
+  <nav class="header">
+    <ul class="header__tilescontainer">
+      <li class="header__tile header__logowrapper">
+        <a class="header__logoreference" href= "/WT.Labs/Lab1/index.html">
+        </a>
+      </li>
+      <li class="header__tile">
+        <div class="header__tile__button">
+            <i class="fas fa-info-circle button__icon"></i>
+            <a class="button__text">О Банке</a>
+        </div>
+      </li>
+      <li class="header__tile">
+        <div class="header__tile__button">
+            <i class="fas fa-handshake button__icon"></i>
+            <a class="button__text">Клиентам</a>
+        </div>
+      </li>
+      <li class="header__tile">
+        <div class="header__tile__button">
+            <i class="fas fa-briefcase button__icon"></i>
+            <a class="button__text">Бизнесу</a>
+        </div>
+      </li>
+      <li class="header__tile">
+        <div class="header__tile__button">
+            <i class="far fa-life-ring button__icon"></i>
+            <a class="button__text">Сервисы и поддержка</a>
+        </div>
+      </li>
+      <li class="header__tile">
+        <div class="header__tile__button header__tile--login">
+            <i class="fas fa-user button__icon"></i>
+            <a href="/WT.Labs/Lab1/login/login.html" class="reference button__text">Личный кабинет</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="loginsection">
+
+   <form method="POST">
+      <div class="loginsection__loginwrapper">
+      
+          <div class="loginsection__loginwrapper__logintile">
+            <h4 class="logintile__header">Вход по логину и паролю</h4>
+            <input value="Логин" class="logintile__field logintile__loginfield" type="text"> 
+            <input value="12345" class="logintile__field logintile__passwordfield" type="password"> 
+
+            <div class="button logintile__button">
+                <span class="logintile__button__text">Войти</span>
+            </div>
+
+            <a href="http://google.com" class="reference loginsection__loginwrapper__servicetext loginsection__loginwrapper__forgottext">Забыли пароль?</a>
+            <a href="http://google.com" class="reference loginsection__loginwrapper__servicetext loginsection__loginwrapper__regtext"> Зарегистрироваться</a>
+        </div>
+      
+      </div>
+   </form>
+    </section>
+
+
+  <footer class="footer">
+    <p>
+      All users of our online services subject to Privacy Statement and agree to be bound by Terms of Service. Please review. <br><br>
+      © 2019 Non-existent company. All rights are not reserved 
+    </p>
+  </footer>
+
+
+</body>
+</html>

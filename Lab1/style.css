@@ -26,6 +26,11 @@ body{
     color: white;
 }
 
+.footer{
+    display: block;
+    color: black;
+    height: 20px;
+}
 
 .header .header__tilescontainer{
     display: flex;
@@ -71,8 +76,21 @@ body{
 }
 
 .header .header__tile__button .button__text{
-    float:left;
+    color:black;
 }
+
+header .header__tile__button .button__text:visited{
+    color:black;
+}
+
+header .header__tile__button .button__text:hover{
+    color:black;
+}
+
+header .header__tile__button .button__text:link{
+    color:black;
+}
+
 
 .header .header__tile__button .button__icon{
     float:left;
