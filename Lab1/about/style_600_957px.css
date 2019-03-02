@@ -9,7 +9,6 @@ body{
     height: 100%;
 }
 
-
 .header__logowrapper{
     height: 100%;
     background-image: url(/WT.Labs/Lab1/logo_small.png);
@@ -28,7 +27,7 @@ body{
 }
 
 .header__tilescontainer .header__tile{
-    font-size: 14px;
+    font-size: 13px;
     height: 100%;
     padding: 1%;
 }
@@ -46,70 +45,59 @@ body{
     padding-left: 4px;
 }
 
-.loginsection{
+.welcomesection{
+    padding-top: 30%;
+    padding-left: 5%;
+    height: 600px;
     width: 100%;
 }
 
-
-.loginsection__loginwrapper{
-    margin-bottom: 1%;
-    height: 100%;
-}
-
-
-.loginsection__loginwrapper__logintile{
-    height: 300px;
+.welcomesection__welcomeblock{
+    padding-left: 5%;
+    padding-top: 1%;
+    min-height: 200px;
+    max-height: 400px;
     width: 60%;
-    margin-bottom: 1%;
-    border-radius: 14px;
-    margin-left: 2%;
 }
 
-.loginsection__loginwrapper__logintile .logintile__header{
-    padding-top: 10px;
-    padding-bottom: 30px;
-}
-
-.loginsection__loginwrapper__logintile .logintile__button{
-    height: 25%;
-    border-radius: 10px;
-}
-
-.loginsection__loginwrapper__logintile .logintile__button{
-    width: 40%;
-    max-height: 10%;
-    margin-left: 25%;
-    margin-top: 5%;
-    font-size: 25px;
-}
-
-.logintile__field{
-    width: 40%;
-    height: 10%;
-    font-size: 20px;
-    border: none; 
-    border:solid 1px #ccc;
-    border-radius: 15px;
-}
-
-.logintile__field:hover{
-    width: 40%;
-    height: 10%;
-    font-size: 20px;
-    border: none; 
-    border:solid 1px #ccc;
-    border-radius: 15px;
-}
-
-
-.logintile__button{
-    padding: 10px;
-}
-
-.logintile__header{
+.welcomesection__welcomeblock__title{
+    font-weight: lighter;
     font-size: 30px;
 }
 
-.loginsection__loginwrapper__servicetext{
-    margin-top: 3%;
+.welcomesection__welcomeblock__title::after{
+    display: block;
+    content: '';
+    width: 100px;
+    height: 4px;
+    margin-top: 10px;
+    background-color: black;
+}
+
+.welcomeaboutsection__header{
+    font-weight: lighter;
+    font-size: 60px;
+    padding-bottom: 50px;
+}
+
+.welcomeaboutsection__header__after{
+    display: inline-block;
+    content: '';
+    width: 200px;
+    height: 4px;
+    margin-top: 10px;
+    background-color: black;
+}
+
+.welcomeaboutsection{
+    padding-top: 50px;
+    height: 900px;
+    color:black;
+}
+
+.welcomeaboutsection__mainarticle{
+    text-align: start;
+    font-weight: lighter;
+    font-size: 18px;
+    padding: 30px;
 }

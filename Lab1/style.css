@@ -295,7 +295,7 @@ header .header__tile__button .button__text:link{
     color:black;
     font-weight: lighter;
     background: white;
-    box-shadow: 1px 1px 1px 1px #b4afae;;
+    box-shadow: 1px 1px 1px 1px #b4afae;
 }
 
 
@@ -312,5 +312,13 @@ header .header__tile__button .button__text:link{
 .banknews__newswrapper__newsentry .newsentry__button:hover{
     background-color: rgb(217, 231, 248);
     color:black;
+}
+
+.banknews__newswrapper__newsentry .newsentry__button{
+    display: inline-block;
+}
+
+.banknews__newswrapper__newsentry{
+    text-align: center;
 }
 

@@ -48,7 +48,7 @@ body{
 .welcomesection{
     padding-top: 30%;
     padding-left: 5%;
-    height: 800px;
+    height: 600px;
     width: 100%;
 }
 
@@ -72,4 +72,33 @@ body{
     height: 4px;
     margin-top: 20px;
     background-color: black;
+}
+
+.welcomeaboutsection__header{
+    font-weight: lighter;
+    font-size: 60px;
+    padding-bottom: 50px;
+}
+
+.welcomeaboutsection__header__after{
+    display: inline-block;
+    content: '';
+    width: 200px;
+    height: 4px;
+    margin-top: 10px;
+    background-color: black;
+}
+
+.welcomeaboutsection{
+    padding-top: 50px;
+    height: 900px;
+    color:black;
+}
+
+.welcomeaboutsection__mainarticle{
+    text-align: start;
+    display: block;
+    font-weight: lighter;
+    font-size: 25px;
+    padding: 50px;
 }

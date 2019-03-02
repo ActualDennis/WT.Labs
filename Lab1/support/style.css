@@ -28,6 +28,13 @@ textarea, select, input, button { outline: none; }
     color: black;
 }
 
+.loginwrapper__logintile{
+    display:block;
+    background-color: white;
+    max-width: 100px;
+    min-height: 100px;
+    margin-left: 40%;
+}
 
 .footer{
     display: block;
@@ -99,20 +106,71 @@ header .header__tile__button .button__text:link{
     float:left;
 }
 
-.welcomesection{
-    background-image: url(/WT.Labs/Lab1/about/welcome-1134x800.jpg);
-    background-size: cover;
-    background-position: center top;
+.supportsection{
+    background-color: rgb(231, 231, 231);
 }
 
-.welcomesection__welcomeblock{
-    background-color: white;
-}
-
-.welcomesection__welcomeblock{
-    color:black;
-}
-
-.welcomeaboutsection{
+.supportsection__supportwrapper{
     text-align: center;
+    background-color: #f7f8f9;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.supportsection__supportwrapper__header{
+    color:black;
+    font-weight: lighter;
+}
+
+.supportsection__supportwrapper__supporttileswrapper__tile{
+    background-color: white;
+    border-radius: 5px;
+}
+
+.supportsection__supportwrapper__findinput{
+    border: none; 
+    color: gray;
+    border:solid 1px #ccc;
+    border-radius: 15px;
+    transition: all 0.3s ease 0s;
+}
+
+.supportsection__supportwrapper__findinput:hover{
+    border: none; 
+    color: gray;
+    border:solid 1px #ccc;
+    transition: all 0.3s ease 0s;
+    border-color: rgb(19, 112, 233);
+}
+
+.supportsection__supportwrapper__supporttileswrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.supportsection__supportwrapper__supporttileswrapper__tile{
+    color: rgb(19, 112, 233);
+    transition: all 0.3s ease 0s;
+    box-shadow: 1px 1px 1px 1px #b4afae;
+}
+
+.supportsection__supportwrapper__supporttileswrapper__tile:hover{
+    color: rgb(19, 112, 233);
+    transition: all 0.3s ease 0s;
+    box-shadow: 2px 2px 2px 2px #b4afae;
+}
+
+.supportsection__chattile{
+    background-color: #f7f8f9;
+    color:black;
+    font-weight: lighter;
+}
+
+.supportsection__chattile__header{
+    font-weight: lighter;
+}
+
+.supportsection__chattile__phonenumber{
+    color: rgb(19, 112, 233);
 }
