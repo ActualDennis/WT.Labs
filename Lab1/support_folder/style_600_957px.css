@@ -11,7 +11,7 @@ body{
 
 .header__logowrapper{
     height: 100%;
-    background-image: url(/WT.Labs/Lab1/logo.png);
+    background-image: url(/logo.png);
     background-repeat: no-repeat;
     width: 210px;
 }
@@ -58,7 +58,7 @@ body{
 
 .supportsection{
     padding-top: 1%;
-    height: 1400px;
+    height: 1500px;
 }
 
 .supportsection__supportwrapper__findinput{
@@ -85,14 +85,15 @@ body{
 
 .supportsection__supportwrapper__supporttileswrapper__tile{
     font-size: 40px;
-    width: 19%;
-    height: 40%;
-    margin-top: 1%;
-    margin-left: 5%;
+    width: 35%;
+    height: 27%;
+    margin-left: 10%;
+    margin-top: 2%;
 }
 
+
 .supportsection__supportwrapper__supporttileswrapper__tile .supporttile__text{
-    font-size: 18px;
+    font-size: 15px;
 }
 
 .supportsection__chattile{

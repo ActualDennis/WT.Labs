@@ -28,13 +28,6 @@ textarea, select, input, button { outline: none; }
     color: black;
 }
 
-.loginwrapper__logintile{
-    display:block;
-    background-color: white;
-    max-width: 100px;
-    min-height: 100px;
-    margin-left: 40%;
-}
 
 .footer{
     display: block;
@@ -106,73 +99,20 @@ header .header__tile__button .button__text:link{
     float:left;
 }
 
+.welcomesection{
+    background-image: url(/about_folder/welcome-1134x800.jpg);
+    background-size: cover;
+    background-position: center top;
+}
 
-.loginsection{
+.welcomesection__welcomeblock{
+    background-color: white;
+}
+
+.welcomesection__welcomeblock{
+    color:black;
+}
+
+.welcomeaboutsection{
     text-align: center;
-    background-image: url(/WT.Labs/Lab1/newsbg.png);
-    background-repeat: no-repeat;
-}
-
-.logintile__header{
-    color: black;
-    font-weight: lighter;
-}
-
-.loginsection__loginwrapper{
-    display:flex;
-    align-content: flex-start;
-    justify-content: center;
-    flex-wrap: wrap;
-    flex-direction: row;
-    background-image: inherit;
-}
-
-
-.loginsection__loginwrapper__logintile{
-    color:black;
-    font-weight: lighter;
-    background: white;
-    box-shadow: 1px 1px 1px 1px #b4afae;;
-}
-
-
-.loginsection__loginwrapper__logintile .logintile__header{
-    color: rgb(19, 112, 233);
-}
-
-
-.loginsection__loginwrapper__logintile .logintile__button{
-    transition: all 0.3s ease 0s;
-    color:white;
-    background-color: rgb(19, 112, 233);
-}
-
-.loginsection__loginwrapper__logintile .logintile__button:hover{
-    transition: all 0.3s ease 0s;
-    background-color: rgb(217, 231, 248);
-    color:black;
-}
-
-.loginsection__loginwrapper__servicetext{
-    transition: all 0.3s ease 0s;
-    display:block;
-}
-
-.loginsection__loginwrapper__servicetext:hover{
-    transition: all 0.3s ease 0s;
-    color: rgb(19, 112, 233);
-}
-
-.logintile__field{
-    transition: all 0.3s ease 0s;
-}
-
-.logintile__field:hover{
-    transition: all 0.3s ease 0s;
-    border-color: rgb(19, 112, 233);
-}
-
-.loginsection{
-    background-image: url(/WT.Labs/Lab1/login/loginbg.png);
-    padding-top: 1%;
 }

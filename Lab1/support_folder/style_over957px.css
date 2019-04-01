@@ -2,39 +2,16 @@ body{
     color:white;
     font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Myriad Pro', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 }
+
 .header__logoreference{
     display:block;
     width: 100%;
     height: 100%;
 }
 
-.header__buttonwithicon{
-    text-align: center;
-}
-
-.header__tilescontainer{
-    display: block !important;
-}
-
-
-.header__logowrapper{
-    width: 60px;
-    height: 100%;
-    background-image: url(/WT.Labs/Lab1/logo_small.png);
-    background-repeat: no-repeat;
-}
-
-.header__tile{
-    display:none !important;
-}
-
-.header__logowrapper{
-    display:block !important;
-}
-
 .header__logowrapper{
     height: 100%;
-    background-image: url(/WT.Labs/Lab1/logo_small.png);
+    background-image: url(/logo.png);
     background-repeat: no-repeat;
     width: 210px;
 }
@@ -69,7 +46,7 @@ body{
 }
 
 .supportsection__supportwrapper__header{
-    font-size: 25px;
+    font-size: 35px;
 }
 
 .supportsection__supportwrapper{
@@ -81,13 +58,13 @@ body{
 
 .supportsection{
     padding-top: 1%;
-    height: 2200px;
+    height: 1400px;
 }
 
 .supportsection__supportwrapper__findinput{
     margin-top: 6%;
     width: 90%;
-    font-size: 13px;
+    font-size: 16px;
     height: 40px;
     padding-left: 1%;
 }
@@ -96,7 +73,7 @@ body{
     margin-top: 6%;
     width: 90%;
     height: 40px;
-    font-size: 13px;
+    font-size: 16px;
     padding-left: 1%;
     border-radius: 15px;
 }
@@ -108,35 +85,33 @@ body{
 
 .supportsection__supportwrapper__supporttileswrapper__tile{
     font-size: 40px;
-    width: 90%;
-    height: 15%;
+    width: 19%;
+    height: 40%;
+    margin-top: 1%;
     margin-left: 5%;
-    margin-top: 2%;
 }
 
-
 .supportsection__supportwrapper__supporttileswrapper__tile .supporttile__text{
-    font-size: 15px;
+    font-size: 18px;
 }
 
 .supportsection__chattile{
     margin-top: 30px;
     width: 80%;
-    height: 10%;
+    height: 18%;
     margin-left: 10%;
 }
 
 .supportsection__chattile__header{
-    font-size: 25px;
-    padding: 20px;
+    font-size: 30px;
+    padding: 30px;
 }
 
 .supportsection__chattile__phonenumber{
     font-size: 20px;
-    padding: 20px;
+    padding: 30px;
 }
 
 .supportsection__chattile__text{
-    font-size: 13px;
-    padding: 20px;
+    padding: 30px;
 }

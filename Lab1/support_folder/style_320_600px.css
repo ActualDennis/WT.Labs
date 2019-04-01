@@ -2,16 +2,39 @@ body{
     color:white;
     font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Myriad Pro', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 }
-
 .header__logoreference{
     display:block;
     width: 100%;
     height: 100%;
 }
 
+.header__buttonwithicon{
+    text-align: center;
+}
+
+.header__tilescontainer{
+    display: block !important;
+}
+
+
+.header__logowrapper{
+    width: 60px;
+    height: 100%;
+    background-image: url(/logo_small.png);
+    background-repeat: no-repeat;
+}
+
+.header__tile{
+    display:none !important;
+}
+
+.header__logowrapper{
+    display:block !important;
+}
+
 .header__logowrapper{
     height: 100%;
-    background-image: url(/WT.Labs/Lab1/logo.png);
+    background-image: url(/logo_small.png);
     background-repeat: no-repeat;
     width: 210px;
 }
@@ -46,7 +69,7 @@ body{
 }
 
 .supportsection__supportwrapper__header{
-    font-size: 35px;
+    font-size: 25px;
 }
 
 .supportsection__supportwrapper{
@@ -58,13 +81,13 @@ body{
 
 .supportsection{
     padding-top: 1%;
-    height: 1500px;
+    height: 2200px;
 }
 
 .supportsection__supportwrapper__findinput{
     margin-top: 6%;
     width: 90%;
-    font-size: 16px;
+    font-size: 13px;
     height: 40px;
     padding-left: 1%;
 }
@@ -73,7 +96,7 @@ body{
     margin-top: 6%;
     width: 90%;
     height: 40px;
-    font-size: 16px;
+    font-size: 13px;
     padding-left: 1%;
     border-radius: 15px;
 }
@@ -85,9 +108,9 @@ body{
 
 .supportsection__supportwrapper__supporttileswrapper__tile{
     font-size: 40px;
-    width: 35%;
-    height: 27%;
-    margin-left: 10%;
+    width: 90%;
+    height: 15%;
+    margin-left: 5%;
     margin-top: 2%;
 }
 
@@ -99,20 +122,21 @@ body{
 .supportsection__chattile{
     margin-top: 30px;
     width: 80%;
-    height: 18%;
+    height: 10%;
     margin-left: 10%;
 }
 
 .supportsection__chattile__header{
-    font-size: 30px;
-    padding: 30px;
+    font-size: 25px;
+    padding: 20px;
 }
 
 .supportsection__chattile__phonenumber{
     font-size: 20px;
-    padding: 30px;
+    padding: 20px;
 }
 
 .supportsection__chattile__text{
-    padding: 30px;
+    font-size: 13px;
+    padding: 20px;
 }

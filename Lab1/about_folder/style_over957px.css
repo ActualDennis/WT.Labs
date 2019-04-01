@@ -9,39 +9,15 @@ body{
     height: 100%;
 }
 
-.header__buttonwithicon{
-    text-align: center;
-}
-
-.header__tilescontainer{
-    display: block !important;
-}
-
-
-.header__logowrapper{
-    width: 60px;
-    height: 100%;
-    background-image: url(/WT.Labs/Lab1/logo_small.png);
-    background-repeat: no-repeat;
-}
-
-.header__tile{
-    display:none !important;
-}
-
-.header__logowrapper{
-    display:block !important;
-}
-
 .header__logowrapper{
     height: 100%;
-    background-image: url(/WT.Labs/Lab1/logo_small.png);
+    background-image: url(/logo.png);
     background-repeat: no-repeat;
     width: 210px;
 }
 
 .header{
-    height: 60px;
+    height: 80px;
     width: 100%;
 }
 
@@ -51,7 +27,7 @@ body{
 }
 
 .header__tilescontainer .header__tile{
-    font-size: 13px;
+    font-size: 17px;
     height: 100%;
     padding: 1%;
 }
@@ -78,15 +54,15 @@ body{
 
 .welcomesection__welcomeblock{
     padding-left: 5%;
-    padding-top: 5%;
+    padding-top: 1%;
     min-height: 200px;
     max-height: 400px;
-    width: 70%;
+    width: 60%;
 }
 
 .welcomesection__welcomeblock__title{
     font-weight: lighter;
-    font-size: 20px;
+    font-size: 45px;
 }
 
 .welcomesection__welcomeblock__title::after{
@@ -94,13 +70,13 @@ body{
     content: '';
     width: 100px;
     height: 4px;
-    margin-top: 10px;
+    margin-top: 20px;
     background-color: black;
 }
 
 .welcomeaboutsection__header{
     font-weight: lighter;
-    font-size: 40px;
+    font-size: 60px;
     padding-bottom: 50px;
 }
 
@@ -121,7 +97,8 @@ body{
 
 .welcomeaboutsection__mainarticle{
     text-align: start;
+    display: block;
     font-weight: lighter;
-    font-size: 13px;
-    padding:  20px;
+    font-size: 25px;
+    padding: 50px;
 }

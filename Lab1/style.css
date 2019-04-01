@@ -233,6 +233,7 @@ header .header__tile__button .button__text:link{
 
 .exchangetable__tablerow{
     transition: all 0.3s ease 0s;
+    color:black;
 }
 
 
@@ -272,7 +273,7 @@ header .header__tile__button .button__text:link{
 .banknews{
     text-align: center;
     background-image: url(newsbg.png);
-    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .banknews__title{
