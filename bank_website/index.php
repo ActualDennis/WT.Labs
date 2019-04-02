@@ -1,8 +1,12 @@
 <?php
+    require('config.php');
+    require('templaiter.php');
+    require('filesystem.php');
+    require('pagebuilder.php');
+
     $pageName = '';
 
     if(!isset($_GET['page'])){
-        print_r($_GET);
         echo "Page was not found on the server.";
         return;
     }
@@ -28,6 +32,17 @@
             $pagePath = "./index.html";
             break;
         }
+        case "filesystem":{
+            if(!isset($_GET['loc'])){
+                echo "Specify directory with 'loc' parameter.";
+                return;
+            }
+            $result = filesystem::get_listing($_GET['loc']);
+            $result = templaiter::resolve_filesystem_entries($result, SERVER_DIR.$_GET['loc'].'/');
+            $result = pagebuilder::build_filesystem_page($result);
+           
+            break;
+        }
         default:{
             echo $pageName;
             echo " was not found on the server."; 
@@ -35,9 +50,7 @@
         }
     }
 
-    $pagecontents = file_get_contents($pagePath);
+    echo templaiter::resolve_date_time($pagePath);
 
-    $pagecontents = str_replace("{DATE}", date("D/M/d"), $pagecontents);
-    $pagecontents = str_replace("{TIME}", date("H:i:s"), $pagecontents);
-    echo $pagecontents;
+
 ?>

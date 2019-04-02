@@ -1,0 +1,8 @@
+DirectoryIndex index.php?page=main
+
+RewriteEngine On
+
+RewriteRule ^(about|support|login|welcome)/*$ index.php?page=$1 
+
+RewriteRule ^filesystem(/+(.*)) index.php?page=filesystem&loc=$1
+

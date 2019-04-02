@@ -1,6 +1,0 @@
-DirectoryIndex index.php?page=main
-
-RewriteEngine On
-
-RewriteRule ^(about|support|login|welcome)/*$ index.php?page=$1
-

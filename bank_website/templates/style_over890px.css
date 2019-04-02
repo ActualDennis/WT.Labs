@@ -1,0 +1,90 @@
+body{
+    color:white;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Myriad Pro', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+}
+
+.header{
+    height: 10%;
+    width: 100%;
+}
+
+.header .header__tilescontainer{
+    height: 100%;
+    min-width: 60%;
+}
+
+.header__tilescontainer .header__tile{
+    font-size: 17px;
+    height: 100%;
+    padding: 1%;
+}
+
+
+.header .header__tile__button .button__text{
+    padding-left: 4px;
+}
+
+/**/
+
+
+.entries__entry__name{
+    width: 40%;
+}
+
+.entries__entry__size{
+    width: 25%;
+}
+
+.entries__entry__img{
+    width: 5%;
+    font-size: 35px;
+}
+
+.entries__entry__datemodified{
+    width: 30%;
+}
+
+.entries__entry{
+    width: 100%;
+    min-height: 20px;
+}
+
+.entries__entry__info{
+    padding: 15px;
+}
+
+.helper{
+    height: 20%;
+    width: 100%;
+}
+
+.helper .helper__tilescontainer{
+    height: 100%;
+    width: 100%;
+}
+
+.helper__tilescontainer .helper__tile{
+    font-size: 17px;
+    height: 100%;
+}
+
+
+.helper .helper__tile__button .button__text{
+    padding-left: 4px;
+}
+
+.helper__tile__type{
+    width: 5% !important;
+}
+
+.helper__tile__name{
+    width: 40% !important;
+}
+
+.helper__tile__size{
+    width: 25% !important;
+}
+
+.helper__tile__datemodified{
+    width: 30% !important;
+}
