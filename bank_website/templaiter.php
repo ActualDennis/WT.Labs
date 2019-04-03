@@ -22,7 +22,7 @@
                 if($entry == "." || $entry == ".."){
                     $tempEntry = str_replace("{SIZE}", "", $tempEntry);
                     $tempEntry = str_replace("{DATEMODIFIED}", "", $tempEntry);
-                    $tempEntry = str_replace("<i class=\"{ICONCLASS} entries__entry__img\"></i>", "", $tempEntry);
+                    $tempEntry = preg_replace('#<i class="(.*?)">(.*?)</i>#', '', $tempEntry);
                     $tempEntry = str_replace("{ENTRYID}", "entry".$current_entry, $tempEntry);
                     $result .= $tempEntry;
                     ++$current_entry;

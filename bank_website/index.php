@@ -29,7 +29,7 @@
         }
         case "welcome":
         case "main":{
-            $pagePath = "./index.html";
+            $pagePath = "./index_folder/index.html";
             break;
         }
         case "filesystem":{

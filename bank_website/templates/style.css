@@ -20,11 +20,9 @@ body{
 .header__tilescontainer .header__tile{
     border-left: 1px solid #b4afae;
     transition: all 0.3s ease 0s;
-    display: flex;
+    display: block;
     color: black;
-    text-align: center;
     text-decoration: none;
-    flex-direction: row;
 }
 
 .header__tilescontainer .header__tile:hover{
@@ -41,15 +39,16 @@ body{
     border-left: none; 
 }
 
-.header .header__tile__button{
-    text-align: center;
-}
-
 .header .header__tile__button .button__text{
     color:black;
 }
 
 /**/
+
+.header__tile__button{
+    display: flex;
+    flex-direction: row;
+}
 
 .helper .helper__tilescontainer{
     display: flex;
@@ -62,11 +61,6 @@ body{
     color: black;
     text-align: left;
     text-decoration: none;
-}
-
-
-.helper .helper__tile__button{
-    text-align: left;
 }
 
 .helper .helper__tile__button .button__text{

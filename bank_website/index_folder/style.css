@@ -109,7 +109,7 @@ header .header__tile__button .button__text:link{
 }
 
 .slide{
-    background-image: url(firstslide.jpg);
+    background-image: url(/index_folder/firstslide.jpg);
     background-repeat: no-repeat;
 }
 
