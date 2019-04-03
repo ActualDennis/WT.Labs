@@ -57,8 +57,8 @@ function delete_files(){
                 alert(result.ErrorMsg);
                 return;
             }
-
             
+            location.reload();
        },
        error: function(err){alert('Server sent data in unknown format.');}
      });

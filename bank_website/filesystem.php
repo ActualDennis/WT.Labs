@@ -51,24 +51,60 @@
             echo json_encode(array("Successfull" => false, "ErrorMsg" => "Directory doesn't exist.", "Redirect_url" => ""));
         }
 
-        public static function delete_files($files, $clientAbsolutePath){
+        public static function delete_files($entries, $clientAbsolutePath){
             $isAllFilesDeleted = true;
-            
-            foreach($files as $file){
-                $localPath = SERVER_DIR.$clientRelativePath."/".$file;
 
-                if(is_file($file)){
+            $clientRelativePath = substr($clientAbsolutePath, strlen(FILESYS_WEBPAGE) + strpos($clientAbsolutePath, FILESYS_WEBPAGE));
+
+            foreach($entries as $entry){
+                if($entry == ''){
+                    $isAllFilesDeleted = false;
+                    continue;
+                }
+
+                $localPath = SERVER_DIR.$clientRelativePath."/".$entry;
+
+                if(is_file($localPath)){
                     if(!unlink($localPath)){
                         $isAllFilesDeleted = false;
                     }
-                }else
-                $isAllFilesDeleted = false;
+                    continue;
+                }
+
+                if(is_dir($localPath)){
+
+                  if(!filesystem::delete_folder_recursive($localPath))
+                    $isAllFilesDeleted = false;
+
+                }
             }
             if(!$isAllFilesDeleted)
               echo json_encode(array("Successfull" => false, "ErrorMsg" => "Not all files were deleted."));
             else
               echo json_encode(array("Successfull" => true, "ErrorMsg" => ""));
             
-        } 
+        }
+        
+        private static function delete_folder_recursive($target) {
+            $successfull = true;
+            if(is_dir($target)){
+                $files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
+        
+                foreach( $files as $file ){
+                    if(!filesystem::delete_folder_recursive( $file )){
+                        $successfull = false;
+                    }      
+                }
+        
+                rmdir( $target );
+                return $successfull;
+            } elseif(is_file($target)) {
+                if(!unlink( $target )){
+                    return false;
+                } 
+                
+                return true; 
+            }
+        }
 	}
 ?>
