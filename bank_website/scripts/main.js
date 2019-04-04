@@ -64,6 +64,27 @@ function delete_files(){
      });
 }
 
+function upload_file() {
+    var file_data = $('#file_upload_input').prop('files')[0];   
+    var form_data = new FormData(); 
+    form_data.append('file', file_data);
+    form_data.append('location', location.href);
+    $.ajax({
+        url: 'filesystem.php', // point to server-side PHP script 
+        type: 'POST',
+        dataType: 'text',  // what to expect back from the PHP script, if anything
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,                         
+        success: function(php_script_response){
+            alert(php_script_response);
+
+            location.reload();
+        }
+     });
+} 
+
 String.prototype.trimRight = function(charlist) {
     if (charlist === undefined)
       charlist = "\s";

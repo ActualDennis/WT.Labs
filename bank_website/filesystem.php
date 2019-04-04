@@ -8,11 +8,18 @@
     if(isset($_POST['destination'])){
         $destination = $_POST['destination'];
         filesystem::redirect($destination, $clientLocation);
+        return;
     }
 
     if(isset($_POST['filesToDelete'])){
         $filesToDelete = $_POST['filesToDelete'];
         filesystem::delete_files($filesToDelete, $clientLocation);
+        return;
+    }
+
+    if(isset($_FILES['file'])){
+        filesystem::create_file($clientLocation);
+        return;
     }
 
 	class filesystem {
@@ -29,7 +36,7 @@
             $clientRelativePath = substr($clientAbsolutePath, strlen(FILESYS_WEBPAGE) + strpos($clientAbsolutePath, FILESYS_WEBPAGE));
 
             $normalizedDestination = $clientRelativePath == "/" 
-            ? 
+            ?
             SERVER_FILESYSTEM_LOCATION.$clientRelativePath.$destination 
             :
             SERVER_FILESYSTEM_LOCATION.$clientRelativePath."/".$destination; 
@@ -84,6 +91,24 @@
               echo json_encode(array("Successfull" => true, "ErrorMsg" => ""));
             
         }
+
+        public static function create_file($clientAbsolutePath){
+            $clientRelativePath = substr($clientAbsolutePath, strlen(FILESYS_WEBPAGE) + strpos($clientAbsolutePath, FILESYS_WEBPAGE));
+
+            if(!file_exists(SERVER_DIR.$clientRelativePath."/".$_FILES['file']['name'])){
+                
+                if(!move_uploaded_file($_FILES['file']['tmp_name'], SERVER_DIR.$clientRelativePath."/".$_FILES['file']['name'])){
+                    echo "Error happened while moving tmp file to server's directory.: ".$_FILES['file']['name'];
+                    return;
+                }
+
+                echo "Successfully uploaded file: ".$_FILES['file']['name'];
+                return;
+            }
+
+            echo "File already exists: ".$_FILES['file']['name'];
+
+        }
         
         private static function delete_folder_recursive($target) {
             $successfull = true;
@@ -106,5 +131,6 @@
                 return true; 
             }
         }
+
 	}
 ?>

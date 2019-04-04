@@ -18,7 +18,6 @@ body{
 
 
 .header__tilescontainer .header__tile{
-    border-left: 1px solid #b4afae;
     transition: all 0.3s ease 0s;
     display: block;
     color: black;
@@ -28,15 +27,6 @@ body{
 .header__tilescontainer .header__tile:hover{
     transition: all 0.3s ease 0s;
     color: rgb(56, 139, 247);
-    box-shadow: 1px 1px 1px 1px #b4afae;;
-}
-
-.header__tilescontainer .header__tile:nth-child(1){
-    border-left: none;
-}
-
-.header__tilescontainer .header__tile:nth-child(1):hover{
-    border-left: none; 
 }
 
 .header .header__tile__button .button__text{
@@ -99,3 +89,4 @@ body{
 .entries__entry__info{
     color: black;
 }
+

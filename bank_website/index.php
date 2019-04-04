@@ -41,7 +41,7 @@
             $result = templaiter::resolve_filesystem_entries($result, SERVER_DIR.$_GET['loc'].'/');
             $result = pagebuilder::build_filesystem_page($result);
            
-            break;
+            return;
         }
         default:{
             echo $pageName;
