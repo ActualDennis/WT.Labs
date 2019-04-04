@@ -7,7 +7,7 @@
 
     if(isset($_POST['destination'])){
         $destination = $_POST['destination'];
-        filesystem::redirect($destination, $clientLocation);
+        filesystem::redirect($destination, $clientLocation, $_POST['IsMovePage']);
         return;
     }
 
@@ -23,15 +23,30 @@
     }
 
 	class filesystem {
-		public static function get_listing($serverPath) {
+		public static function get_listing($serverPath, $OnlyDirs) {
+
             $listing = scandir(SERVER_DIR."/".$serverPath);
             if($listing == FALSE){
                 return FALSE;
             }
+
+            if($OnlyDirs){
+                $result = array();
+                
+                foreach($listing as $entry){
+                    if(is_dir(SERVER_DIR."/".$serverPath."/".$entry) || $entry == "." || $entry == ".."){
+                        array_push($result, $entry);
+                    }
+                }
+
+                return $result;
+            }
+
+
             return $listing;
         }
         
-        public static function redirect($destination, $clientAbsolutePath){
+        public static function redirect($destination, $clientAbsolutePath, $IsManualDotsHandlingUsed){
 
             $clientRelativePath = substr($clientAbsolutePath, strlen(FILESYS_WEBPAGE) + strpos($clientAbsolutePath, FILESYS_WEBPAGE));
 
@@ -43,7 +58,24 @@
 
             $localPath = SERVER_DIR.$clientRelativePath."/".$destination;
 
-            //dot and two dots( . and ..) are handled by browser itself.
+            if($IsManualDotsHandlingUsed == 'true'){
+
+                if($destination == "."){
+                    echo json_encode(array("Successfull" => true, "ErrorMsg" => "", "Redirect_url" => SERVER_FILESYSTEM_LOCATION.$clientRelativePath));
+                    return;
+                }
+
+                if($destination == ".."){
+
+                    if($clientRelativePath == "/" || $clientRelativePath == ""){
+                        echo json_encode(array("Successfull" => true, "ErrorMsg" => "", "Redirect_url" => SERVER_FILESYSTEM_LOCATION));
+                        return;
+                    }
+                    echo substr($normalizedDestination, 0 , strrpos("/"));
+                    echo json_encode(array("Successfull" => true, "ErrorMsg" => "", "Redirect_url" => substr($normalizedDestination, 0 , strrpos("/"))));
+                    return;
+                }
+            }
 
             if(is_dir($localPath)){
                 echo json_encode(array("Successfull" => true, "ErrorMsg" => "", "Redirect_url" => $normalizedDestination));

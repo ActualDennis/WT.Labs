@@ -52,7 +52,7 @@
         }
         
         public static function get_move_templated_entries($relativePath, $absolutePath){
-            $listing = filesystem::get_listing($relativePath);
+            $listing = filesystem::get_listing($relativePath, true);
 
             $entryHtml = file_get_contents("./templates/filesystem_move_entry.html");
             $result = '';

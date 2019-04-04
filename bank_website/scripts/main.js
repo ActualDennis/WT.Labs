@@ -18,20 +18,6 @@ function change_chosen_entry(elementId){
     element.classList.add('entries__entry--chosen');
 }
 
-function update_move_listing() {
-    $.ajax({
-        url:"templaiter.php",
-        type: "POST", 
-        dataType: 'text',
-        data: {location: "/"},  //load root directory at first.
-        success:function(result){
-            document.getElementById('move_modal_body_entries').insertAdjacentHTML('beforebegin', result);
-            $(".entries__moveentry").dblclick((e) => movefiles_movetodirectory(e));
-        },
-        error: function(err){alert('Server sent data in unknown format.');}
-     });
-} 
-
 function moveto_directory(e){
     var entry_name = 
         $(e.target)
@@ -43,8 +29,8 @@ function moveto_directory(e){
         url:"filesystem.php",
         type: "POST", 
         dataType: 'json',
-        data: {location: window.location.href, destination:  newLocation},
-        success:function(result){
+        data: {location: window.location.href, destination:  newLocation, IsMovePage: false },
+        success: function(result){
 
             if(!result.Successfull){
                 alert(result.ErrorMsg);

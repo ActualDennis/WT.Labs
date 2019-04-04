@@ -37,7 +37,7 @@
                 echo "Specify directory with 'loc' parameter.";
                 return;
             }
-            $result = filesystem::get_listing($_GET['loc']);
+            $result = filesystem::get_listing($_GET['loc'], false);
             $result = templaiter::resolve_filesystem_entries($result, SERVER_DIR.$_GET['loc'].'/');
             $result = pagebuilder::build_filesystem_page($result);
            
