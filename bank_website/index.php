@@ -1,7 +1,7 @@
 <?php
     require('config.php');
     require('templaiter.php');
-    require('filesystem.php');
+    require_once('filesystem.php');
     require('pagebuilder.php');
 
     $pageName = '';

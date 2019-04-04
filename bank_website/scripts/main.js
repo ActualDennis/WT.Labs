@@ -3,12 +3,11 @@ var IsClicked = false;
 
 $(".entries__entry").dblclick((e) => moveto_directory(e));
 
-function change_chosen_entry(elementId){
-    if(IsClicked){
-        moveto_directory();
-        return;
-    }
+$("#move_close_button").click(() => {
+    $(".entries__moveentry").remove(); 
+} );
 
+function change_chosen_entry(elementId){
     var element = document.getElementById(elementId);
 
     if(element.classList.contains('entries__entry--chosen')){
@@ -18,6 +17,20 @@ function change_chosen_entry(elementId){
 
     element.classList.add('entries__entry--chosen');
 }
+
+function update_move_listing() {
+    $.ajax({
+        url:"templaiter.php",
+        type: "POST", 
+        dataType: 'text',
+        data: {location: "/"},  //load root directory at first.
+        success:function(result){
+            document.getElementById('move_modal_body_entries').insertAdjacentHTML('beforebegin', result);
+            $(".entries__moveentry").dblclick((e) => movefiles_movetodirectory(e));
+        },
+        error: function(err){alert('Server sent data in unknown format.');}
+     });
+} 
 
 function moveto_directory(e){
     var entry_name = 
@@ -44,8 +57,15 @@ function moveto_directory(e){
      });
 }
 
+
 function delete_files(){
     let filesToDelete = Array.from(document.querySelectorAll('div.entries__entry--chosen span.entries__entry__name')).map(el => el.childNodes[0].data);
+
+    if(filesToDelete.length == 0){
+        alert('Choose files/folders to delete.');
+        return;
+    }
+
     $.ajax({
         url:"filesystem.php", 
         type: "POST",

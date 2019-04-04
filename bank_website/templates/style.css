@@ -69,13 +69,17 @@ body{
     flex-direction: column;
 }
 
+.entries__moveentry,
 .entries__entry{
     transition: all 0.3s ease 0s;
     display: flex;
     flex-direction: row;
 }
 
+
+.entries__moveentry--chosen,
 .entries__entry--chosen,
+.entries__moveentry:hover,
 .entries__entry:hover{
     transition: all 0.3s ease 0s;
     background-color: #dbdbdb;
