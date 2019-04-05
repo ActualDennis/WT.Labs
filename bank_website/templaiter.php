@@ -5,9 +5,14 @@
         return;
     }
 
+    if(isset($_POST['IsMovePage'])){
+        return;
+    }
+
+
     $clientLocation = trim($_POST['location'], "/");
 
-    templaiter::get_move_templated_entries($clientLocation, SERVER_DIR."/".$clientLocation);
+    templaiter::get_move_templated_entries($clientLocation, SERVER_DIR."/".$clientLocation."/");
 
 	class templaiter {
 
@@ -58,6 +63,7 @@
             $result = '';
             $tempEntry = '';
             $current_entry = 0;
+            if($absolutePath)
 
             foreach($listing as $entry){
                 $tempEntry = str_replace("{NAME}", $entry, $entryHtml);

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>NotARealBank</title>
+  <title>NotARealBank filesystem</title>
   <link rel="stylesheet" href="/templates/style.css">
   <link rel="stylesheet" media="(min-width: 890px)" href="/templates/style_over890px.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -16,19 +16,19 @@
       <li onclick="delete_files()" class="header__tile">
           <button type="button" class="btn btn-primary header__tile__button">
               <i class="far fa-trash-alt button__icon"></i>
-              <span>Удалить</span>
+              <span class="button__text">Удалить</span>
           </button>
       </li>
-      <li class="header__tile">           <!--Load root directory at first-->
-          <button type="button" onclick="update_move_listing('/')" class="btn btn-primary header__tile__button" data-toggle="modal" data-target="#move_modal">
+      <li class="header__tile">     <!--  data-toggle="modal" data-target="#move_modal"-->          
+          <button type="button" onclick="handle_move()" class="btn btn-primary header__tile__button">
               <i class="fas fa-arrow-up button__icon"></i>
-              <span>Переместить</span>
+              <span class="button__text">Переместить</span>
           </button>
       </li>
       <li class="header__tile">
             <button type="button" class="btn btn-primary header__tile__button" data-toggle="modal" data-target="#upload_modal">
                 <i class="fas fa-upload button__icon"></i>
-                <span>Загрузить</span>
+                <span class="button__text">Загрузить</span>
             </button>
       </li>
     </ul>
@@ -103,7 +103,7 @@
                 <div id="move_modal_body_entries">
 
                 </div>
-                <button style="margin-top: 5%;" onclick="upload_file()" class="btn btn-info">Move</button>
+                <button style="margin-top: 5%;" onclick="move_files()" class="btn btn-info">Move</button>
             </div>
           </div>
         </div>

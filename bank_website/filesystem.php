@@ -22,10 +22,16 @@
         return;
     }
 
+    if(isset($_POST['whatToMove']) && isset($_POST['moveTo'])){
+        filesystem::move_entries($_POST['whatToMove'], $clientLocation, $_POST['moveTo']);
+        return;
+    }
+
 	class filesystem {
 		public static function get_listing($serverPath, $OnlyDirs) {
 
             $listing = scandir(SERVER_DIR."/".$serverPath);
+
             if($listing == FALSE){
                 return FALSE;
             }
@@ -58,8 +64,13 @@
 
             $localPath = SERVER_DIR.$clientRelativePath."/".$destination;
 
-            if($IsManualDotsHandlingUsed == 'true'){
+            // echo $clientAbsolutePath;
 
+            // echo $clientRelativePath;
+
+            // echo $localPath;
+
+            if($IsManualDotsHandlingUsed == 'true'){
                 if($destination == "."){
                     echo json_encode(array("Successfull" => true, "ErrorMsg" => "", "Redirect_url" => SERVER_FILESYSTEM_LOCATION.$clientRelativePath));
                     return;
@@ -71,8 +82,8 @@
                         echo json_encode(array("Successfull" => true, "ErrorMsg" => "", "Redirect_url" => SERVER_FILESYSTEM_LOCATION));
                         return;
                     }
-                    echo substr($normalizedDestination, 0 , strrpos("/"));
-                    echo json_encode(array("Successfull" => true, "ErrorMsg" => "", "Redirect_url" => substr($normalizedDestination, 0 , strrpos("/"))));
+                    $temp = substr($normalizedDestination, 0 , strrpos($normalizedDestination, "/"));
+                    echo json_encode(array("Successfull" => true, "ErrorMsg" => "", "Redirect_url" => substr($temp, 0 , strrpos($temp, "/"))));
                     return;
                 }
             }
@@ -141,6 +152,52 @@
             echo "File already exists: ".$_FILES['file']['name'];
 
         }
+
+        public static function move_entries($entries,$clientLocation,$newLocation){
+            $newLocation = str_replace('/filesystem', "", $newLocation);
+
+            foreach ($entries as $entry) {
+                if(is_file(SERVER_DIR."/".$clientLocation."/".$entry)){
+                    rename(SERVER_DIR."/".$clientLocation."/".$entry, SERVER_DIR.$newLocation."/".$entry);
+                    continue;
+                }
+
+               filesystem::recurse_copy(SERVER_DIR."/".$clientLocation."/".$entry, SERVER_DIR.$newLocation);
+
+               filesystem::rrmdir(SERVER_DIR."/".$clientLocation."/".$entry);
+            }
+
+            echo json_encode(array("Message" => "Successfully moved files."));
+        }
+
+
+        private static function rrmdir($dir) {
+            
+            if (is_dir($dir)) {
+                $files = scandir($dir);
+                foreach ($files as $file)
+                    if ($file != "." && $file != "..") filesystem::rrmdir("$dir/$file");
+                rmdir($dir);
+            }
+            else if (file_exists($dir)) unlink($dir);
+        }
+
+    
+        private static function recurse_copy($src,$dst) { 
+            $dir = opendir($src); 
+            @mkdir($dst); 
+            while(false !== ( $file = readdir($dir)) ) { 
+                if (( $file != '.' ) && ( $file != '..' )) { 
+                    if ( is_dir($src . '/' . $file) ) { 
+                        filesystem::recurse_copy($src . '/' . $file,$dst . '/' . $file); 
+                    } 
+                    else { 
+                        copy($src . '/' . $file,$dst . '/' . $file); 
+                    } 
+                } 
+            } 
+            closedir($dir); 
+        } 
         
         private static function delete_folder_recursive($target) {
             $successfull = true;

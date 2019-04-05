@@ -19,7 +19,6 @@ body{
 
 .header__tilescontainer .header__tile{
     transition: all 0.3s ease 0s;
-    display: block;
     color: black;
     text-decoration: none;
 }
@@ -30,14 +29,14 @@ body{
 }
 
 .header .header__tile__button .button__text{
-    color:black;
+    color:white;
 }
 
 /**/
 
 .header__tile__button{
-    display: flex;
-    flex-direction: row;
+    display: flex !important;
+    flex-direction: row !important;
 }
 
 .helper .helper__tilescontainer{

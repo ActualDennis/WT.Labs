@@ -1,5 +1,4 @@
 var chosen_entry = '';
-var IsClicked = false;
 
 $(".entries__entry").dblclick((e) => moveto_directory(e));
 
@@ -20,8 +19,8 @@ function change_chosen_entry(elementId){
 
 function moveto_directory(e){
     var entry_name = 
-        $(e.target)
-        .closest("span.entries__entry__name");
+        $(e.target.parentNode)
+        .find("span.entries__entry__name");
 
     var newLocation = entry_name[0].childNodes[0].data;
 
@@ -29,7 +28,7 @@ function moveto_directory(e){
         url:"filesystem.php",
         type: "POST", 
         dataType: 'json',
-        data: {location: window.location.href, destination:  newLocation, IsMovePage: false },
+        data: {location: location.href, destination:  newLocation, IsMovePage: false },
         success: function(result){
 
             if(!result.Successfull){
@@ -37,7 +36,7 @@ function moveto_directory(e){
                 return;
             }
 
-            window.location.href = result.Redirect_url;
+            location.href = result.Redirect_url;
        },
        error: function(err){alert('Server sent data in unknown format.');}
      });
@@ -56,7 +55,7 @@ function delete_files(){
         url:"filesystem.php", 
         type: "POST",
         dataType: 'json',
-        data: {location: window.location.href, filesToDelete: filesToDelete},
+        data: {location: location.href, filesToDelete: filesToDelete},
         success:function(result){
 
             if(!result.Successfull){
