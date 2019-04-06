@@ -11,7 +11,7 @@ body{
 
 .header__logowrapper{
     height: 100%;
-    background-image: url(/logo.png);
+    background-image: url(/index_folder/logo.png);
     background-repeat: no-repeat;
     width: 210px;
 }

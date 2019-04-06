@@ -1,4 +1,5 @@
 var chosen_entry = '';
+let maxFileSize = 1024 * 1024 * 54;
 
 $(".entries__entry").dblclick((e) => moveto_directory(e));
 
@@ -25,10 +26,10 @@ function moveto_directory(e){
     var newLocation = entry_name[0].childNodes[0].data;
 
     $.ajax({
-        url:"filesystem.php",
-        type: "POST", 
+        url:"/index.php?script=WebFilesystem.php",
+        type: "GET", 
         dataType: 'json',
-        data: {location: location.href, destination:  newLocation, IsMovePage: false },
+        data: {location: getRelativePath(location.href), destination:  newLocation, IsMovePage: false },
         success: function(result){
 
             if(!result.Successfull){
@@ -52,10 +53,10 @@ function delete_files(){
     }
 
     $.ajax({
-        url:"filesystem.php", 
-        type: "POST",
+        url:"/index.php?script=WebFilesystem.php", 
+        type: "GET",
         dataType: 'json',
-        data: {location: location.href, filesToDelete: filesToDelete},
+        data: {location: getRelativePath(location.href), filesToDelete: filesToDelete},
         success:function(result){
 
             if(!result.Successfull){
@@ -70,12 +71,18 @@ function delete_files(){
 }
 
 function upload_file() {
-    var file_data = $('#file_upload_input').prop('files')[0];   
+    var file_data = $('#file_upload_input').prop('files')[0];
+
+    if(file_data.size > maxFileSize){
+        alert("File size is more than the maximum.");
+        return;
+    }  
+    
     var form_data = new FormData(); 
     form_data.append('file', file_data);
-    form_data.append('location', location.href);
+    form_data.append('location', getRelativePath(location.href));
     $.ajax({
-        url: 'filesystem.php', // point to server-side PHP script 
+        url: '/index.php?script=WebFilesystem.php', // point to server-side PHP script 
         type: 'POST',
         dataType: 'text',  // what to expect back from the PHP script, if anything
         cache: false,
@@ -89,6 +96,10 @@ function upload_file() {
         }
      });
 } 
+
+function getRelativePath(absolutePath){
+    return absolutePath.substr(absolutePath.indexOf('/filesystem') + '/filesystem'.length);
+}
 
 String.prototype.trimRight = function(charlist) {
     if (charlist === undefined)

@@ -1,5 +1,5 @@
 
-let move_current_path = '/filesystem/';
+let move_current_path = '/';
 
 let amount_chosen = 0;
 
@@ -28,8 +28,8 @@ function movefiles_movetodirectory(e){
     var newLocation = entry_name[0].childNodes[0].data;
 
     $.ajax({
-        url:"filesystem.php",
-        type: "POST", 
+        url:"/index.php?script=WebFilesystem.php",
+        type: "GET", 
         dataType: 'json', //non-relative
         data: {location: move_current_path, destination:  newLocation, IsMovePage: true },
         success:function(result){
@@ -40,15 +40,9 @@ function movefiles_movetodirectory(e){
                 return;
             }
 
-            let relativePath = result.Redirect_url.substring(result.Redirect_url.indexOf("filesystem") + "filesystem".length);
+            let relativePath = getRelativePath(result.Redirect_url);
 
             update_move_listing(relativePath);
-
-            move_current_path = "/filesystem" + relativePath;
-
-            amount_chosen = 0;
-
-            $('#spinner_move').hide();
         },
         error: function(err){alert('Server sent data in unknown format.');}
     });
@@ -85,10 +79,10 @@ function move_files(){
     whatToMove.forEach(x => entriesToMove.push(x.childNodes[0].data))
 
     $.ajax({
-        url:"filesystem.php",
-        type: "POST", 
-        dataType: 'json',                                          //send relative path
-        data: {whatToMove: entriesToMove, moveTo: move_current_path.trimRight("/") + "/" + entriesNames[0], location: location.href.substring(location.href.indexOf("filesystem") + "filesystem".length), IsMovePage: true},
+        url:"/index.php?script=WebFilesystem.php",
+        type: "GET", 
+        dataType: 'json',                                          
+        data: {whatToMove: entriesToMove, moveTo: move_current_path.trimRight("/") + "/" + entriesNames[0], location: getRelativePath(location.href), IsMovePage: true},
         success:function(result){
                 alert(result.Message);
                 return;
@@ -99,14 +93,22 @@ function move_files(){
 
 function update_move_listing(path) {
     $.ajax({
-        url:"templaiter.php",
-        type: "POST", 
+        url:"/index.php?script=TemplatesHelper.php",
+        type: "GET", 
         dataType: 'text',
-        data: {location: path},  //load root directory at first.
+        data: {location: path, request: "GetEntries"},  //load root directory at first.
         success:function(result){
             $(".entries__moveentry").remove();
+
             document.getElementById('move_modal_body_entries').insertAdjacentHTML('beforebegin', result);
+
             $(".entries__moveentry").dblclick((e) => movefiles_movetodirectory(e));
+
+            move_current_path = path;
+
+            amount_chosen = 0;
+
+            $('#spinner_move').hide();
         },
         error: function(err){alert('Server sent data in unknown format.');}
      });

@@ -174,3 +174,8 @@ header .header__tile__button .button__text:link{
 .supportsection__chattile__phonenumber{
     color: rgb(19, 112, 233);
 }
+
+.header__tile__button .button__text{
+    width: 100%;
+    height: 100%;
+}

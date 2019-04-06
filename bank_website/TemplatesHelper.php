@@ -1,28 +1,16 @@
 <?php
-    require_once('filesystem.php');
-
-    if(!isset($_POST['location'])){
-        return;
-    }
-
-    if(isset($_POST['IsMovePage'])){
-        return;
-    }
+    require_once('WebFilesystem.php');
 
 
-    $clientLocation = trim($_POST['location'], "/");
+	class TemplatesHelper {
 
-    templaiter::get_move_templated_entries($clientLocation, SERVER_DIR."/".$clientLocation."/");
-
-	class templaiter {
-
-		public static function resolve_date_time($pagePath) {
+		public static function ResolveDateTimeTemplate($pagePath) {
             $pagecontents = file_get_contents($pagePath);
             $pagecontents = str_replace("{DATE}", date("D/M/d"), $pagecontents);
             return str_replace("{TIME}", date("H:i:s"), $pagecontents);
         }
 
-        public static function resolve_filesystem_entries($entries, $path) {
+        public static function GetEntriesTemplates($entries, $path) {
             if(!is_array($entries)){
                 print_r($entries);
                 return $entries;
@@ -56,16 +44,14 @@
             return $result;
         }
         
-        public static function get_move_templated_entries($relativePath, $absolutePath){
-            $listing = filesystem::get_listing($relativePath, true);
-
+        public static function GetMoveEntryTemplates($entries, $absolutePath){
             $entryHtml = file_get_contents("./templates/filesystem_move_entry.html");
             $result = '';
             $tempEntry = '';
             $current_entry = 0;
             if($absolutePath)
 
-            foreach($listing as $entry){
+            foreach($entries as $entry){
                 $tempEntry = str_replace("{NAME}", $entry, $entryHtml);
 
                 if($entry == "." || $entry == ".."){
@@ -86,7 +72,7 @@
                 ++$current_entry;
             }
 
-            echo $result;
+            return $result;
         }
         
 	}

@@ -21,7 +21,7 @@ body{
 .header__logowrapper{
     width: 60px;
     height: 100%;
-    background-image: url(/logo_small.png);
+    background-image: url(/index_folder/logo_small.png);
     background-repeat: no-repeat;
 }
 
@@ -35,7 +35,7 @@ body{
 
 .header__logowrapper{
     height: 100%;
-    background-image: url(/logo_small.png);
+    background-image: url(/index_folder/logo_small.png);
     background-repeat: no-repeat;
     width: 210px;
 }

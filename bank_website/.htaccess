@@ -2,8 +2,6 @@ DirectoryIndex index.php?page=main
 
 RewriteEngine On
 
-RewriteRule ^(about|support|login|welcome)/*$ index.php?page=$1 
+RewriteRule ^(about|support|login|welcome)/*$ index.php?page=$1 [NC]
 
-RewriteRule ^filesystem.php(.*) filesystem.php$1
-
-RewriteRule ^filesystem(/*(.*)) index.php?page=filesystem&loc=$1
+RewriteRule ^filesystem(/+[\s\S]*) index.php?page=filesystem&loc=$1

@@ -323,3 +323,7 @@ header .header__tile__button .button__text:link{
     text-align: center;
 }
 
+.header__tile__button .button__text{
+    width: 100%;
+    height: 100%;
+}

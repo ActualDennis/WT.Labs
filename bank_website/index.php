@@ -1,8 +1,63 @@
 <?php
-    require('config.php');
-    require('templaiter.php');
-    require_once('filesystem.php');
-    require('pagebuilder.php');
+    require_once('config.php');
+    require_once('TemplatesHelper.php');
+    require_once('WebFilesystem.php');
+    require_once('Pagebuilder.php');
+
+    if(isset($_GET['script'])){
+
+        $scriptName = substr($_GET['script'], 0 , strpos($_GET['script'], "php") + strlen("php"));
+        switch($scriptName){
+            case "WebFilesystem.php":{
+
+                if(!isset($_GET['location'])){
+
+                    if(!isset($_POST['location'])){
+                        return;
+                    }
+
+                    $clientLocation = "/".trim($_POST['location'], "/");
+
+                    if(isset($_FILES['file'])){
+                        WebFilesystem::CreateFile($clientLocation);
+                        return;
+                    }
+
+                    return;
+                }
+                $clientLocation = "/".trim($_GET['location'], "/");
+            
+                if(isset($_GET['destination'])){
+                    $destination = $_GET['destination'];
+                    WebFilesystem::Redirect($destination, $clientLocation, $_GET['IsMovePage']);
+                    return;
+                }
+            
+                if(isset($_GET['filesToDelete'])){
+                    $filesToDelete = $_GET['filesToDelete'];
+                    WebFilesystem::DeleteFilesystemEntries($filesToDelete, $clientLocation);
+                    return;
+                }
+            
+                if(isset($_GET['whatToMove']) && isset($_GET['moveTo'])){
+                    WebFilesystem::MoveEntries($_GET['whatToMove'], $clientLocation, $_GET['moveTo']);
+                    return;
+                }
+
+                return;
+            }
+            case "TemplatesHelper.php":{
+                if(!isset($_GET['location'])){
+                    return;
+                }
+            
+                $clientLocation = trim($_GET['location'], "/");
+                $listing = WebFilesystem::GetDirectoryListing($clientLocation, true);
+                echo TemplatesHelper::GetMoveEntryTemplates($listing, SERVER_DIR."/".$clientLocation."/");
+                return;
+            }
+        }
+    }
 
     $pageName = '';
 
@@ -37,9 +92,9 @@
                 echo "Specify directory with 'loc' parameter.";
                 return;
             }
-            $result = filesystem::get_listing($_GET['loc'], false);
-            $result = templaiter::resolve_filesystem_entries($result, SERVER_DIR.$_GET['loc'].'/');
-            $result = pagebuilder::build_filesystem_page($result);
+            $result = WebFilesystem::GetDirectoryListing($_GET['loc'], false);
+            $result = TemplatesHelper::GetEntriesTemplates($result, SERVER_DIR.$_GET['loc'].'/');
+            echo Pagebuilder::BuildFilesystemPage($result);
            
             return;
         }
@@ -50,7 +105,4 @@
         }
     }
 
-    echo templaiter::resolve_date_time($pagePath);
-
-
-?>
+    echo TemplatesHelper::ResolveDateTimeTemplate($pagePath);

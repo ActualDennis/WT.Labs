@@ -1,34 +1,6 @@
 <?php 
-    if(!isset($_POST['location'])){
-        return;
-    }
-
-    $clientLocation = trim($_POST['location'], "/");
-
-    if(isset($_POST['destination'])){
-        $destination = $_POST['destination'];
-        filesystem::redirect($destination, $clientLocation, $_POST['IsMovePage']);
-        return;
-    }
-
-    if(isset($_POST['filesToDelete'])){
-        $filesToDelete = $_POST['filesToDelete'];
-        filesystem::delete_files($filesToDelete, $clientLocation);
-        return;
-    }
-
-    if(isset($_FILES['file'])){
-        filesystem::create_file($clientLocation);
-        return;
-    }
-
-    if(isset($_POST['whatToMove']) && isset($_POST['moveTo'])){
-        filesystem::move_entries($_POST['whatToMove'], $clientLocation, $_POST['moveTo']);
-        return;
-    }
-
-	class filesystem {
-		public static function get_listing($serverPath, $OnlyDirs) {
+	class WebFilesystem {
+		public static function GetDirectoryListing($serverPath, $OnlyDirs) {
 
             $listing = scandir(SERVER_DIR."/".$serverPath);
 
@@ -52,11 +24,9 @@
             return $listing;
         }
         
-        public static function redirect($destination, $clientAbsolutePath, $IsManualDotsHandlingUsed){
+        public static function Redirect($destination, $clientRelativePath, $IsManualDotsHandlingUsed){
 
-            $clientRelativePath = substr($clientAbsolutePath, strlen(FILESYS_WEBPAGE) + strpos($clientAbsolutePath, FILESYS_WEBPAGE));
-
-            $normalizedDestination = $clientRelativePath == "/" 
+            $normalizedDestination = $clientRelativePath == "" 
             ?
             SERVER_FILESYSTEM_LOCATION.$clientRelativePath.$destination 
             :
@@ -64,11 +34,11 @@
 
             $localPath = SERVER_DIR.$clientRelativePath."/".$destination;
 
-            // echo $clientAbsolutePath;
+            // echo $clientRelativePath." ";
 
-            // echo $clientRelativePath;
+            // echo $localPath." ";
 
-            // echo $localPath;
+            // echo $$normalizedDestination;
 
             if($IsManualDotsHandlingUsed == 'true'){
                 if($destination == "."){
@@ -101,10 +71,8 @@
             echo json_encode(array("Successfull" => false, "ErrorMsg" => "Directory doesn't exist.", "Redirect_url" => ""));
         }
 
-        public static function delete_files($entries, $clientAbsolutePath){
+        public static function DeleteFilesystemEntries($entries, $clientRelativePath){
             $isAllFilesDeleted = true;
-
-            $clientRelativePath = substr($clientAbsolutePath, strlen(FILESYS_WEBPAGE) + strpos($clientAbsolutePath, FILESYS_WEBPAGE));
 
             foreach($entries as $entry){
                 if($entry == ''){
@@ -113,6 +81,7 @@
                 }
 
                 $localPath = SERVER_DIR.$clientRelativePath."/".$entry;
+                $localPath = str_replace("//", "/", $localPath );
 
                 if(is_file($localPath)){
                     if(!unlink($localPath)){
@@ -123,7 +92,7 @@
 
                 if(is_dir($localPath)){
 
-                  if(!filesystem::delete_folder_recursive($localPath))
+                  if(!WebFilesystem::DeleteDirRecursive($localPath))
                     $isAllFilesDeleted = false;
 
                 }
@@ -135,9 +104,7 @@
             
         }
 
-        public static function create_file($clientAbsolutePath){
-            $clientRelativePath = substr($clientAbsolutePath, strlen(FILESYS_WEBPAGE) + strpos($clientAbsolutePath, FILESYS_WEBPAGE));
-
+        public static function CreateFile($clientRelativePath){
             if(!file_exists(SERVER_DIR.$clientRelativePath."/".$_FILES['file']['name'])){
                 
                 if(!move_uploaded_file($_FILES['file']['tmp_name'], SERVER_DIR.$clientRelativePath."/".$_FILES['file']['name'])){
@@ -153,59 +120,82 @@
 
         }
 
-        public static function move_entries($entries,$clientLocation,$newLocation){
-            $newLocation = str_replace('/filesystem', "", $newLocation);
+        public static function MoveEntries($entries,$clientLocation,$newLocation){
+            if($clientLocation === "/")
+                $clientLocation = "";
+
+            $newLocation = str_replace("//", "/", $newLocation );
+            $errorsHappened = false;
 
             foreach ($entries as $entry) {
-                if(is_file(SERVER_DIR."/".$clientLocation."/".$entry)){
-                    rename(SERVER_DIR."/".$clientLocation."/".$entry, SERVER_DIR.$newLocation."/".$entry);
+                if($entry === "." || $entry === ".."){
+                    $errorsHappened = true;
                     continue;
                 }
 
-               filesystem::recurse_copy(SERVER_DIR."/".$clientLocation."/".$entry, SERVER_DIR.$newLocation);
+                if(is_file(SERVER_DIR.$clientLocation."/".$entry)){
+                    if(!rename(SERVER_DIR.$clientLocation."/".$entry, SERVER_DIR.$newLocation."/".$entry)){
+                        $errorsHappened = true;
+                    }
+                    continue;
+                }
 
-               filesystem::rrmdir(SERVER_DIR."/".$clientLocation."/".$entry);
+               if(!WebFilesystem::CopyDirRecursive(SERVER_DIR."/".$clientLocation."/".$entry, SERVER_DIR.$newLocation)){
+                    $errorsHappened = true;
+               }
+
+               WebFilesystem::RemoveDirectory(SERVER_DIR."/".$clientLocation."/".$entry);
+            }
+
+            if($errorsHappened){
+                echo json_encode(array("Message" => "Errors happened while moving files."));
+                return;
             }
 
             echo json_encode(array("Message" => "Successfully moved files."));
         }
 
 
-        private static function rrmdir($dir) {
+        private static function RemoveDirectory($dir) {
             
             if (is_dir($dir)) {
                 $files = scandir($dir);
                 foreach ($files as $file)
-                    if ($file != "." && $file != "..") filesystem::rrmdir("$dir/$file");
+                    if ($file != "." && $file != "..") filesystem::removeDirectory("$dir/$file");
                 rmdir($dir);
             }
             else if (file_exists($dir)) unlink($dir);
         }
 
     
-        private static function recurse_copy($src,$dst) { 
+        private static function CopyDirRecursive($src,$dst) { 
             $dir = opendir($src); 
             @mkdir($dst); 
+            $IsSuccessfull = true;
             while(false !== ( $file = readdir($dir)) ) { 
                 if (( $file != '.' ) && ( $file != '..' )) { 
                     if ( is_dir($src . '/' . $file) ) { 
-                        filesystem::recurse_copy($src . '/' . $file,$dst . '/' . $file); 
+                        if(!WebFilesystem::CopyDirRecursive($src . '/' . $file,$dst . '/' . $file)){
+                            $IsSuccessfull = false;
+                        } 
                     } 
                     else { 
-                        copy($src . '/' . $file,$dst . '/' . $file); 
+                        if(!copy($src . '/' . $file,$dst . '/' . $file))
+                            $IsSuccessfull = false;                            
                     } 
-                } 
+                }
             } 
             closedir($dir); 
+            return $IsSuccessfull; 
         } 
         
-        private static function delete_folder_recursive($target) {
+        private static function DeleteDirRecursive($target) {
             $successfull = true;
             if(is_dir($target)){
                 $files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
         
                 foreach( $files as $file ){
-                    if(!filesystem::delete_folder_recursive( $file )){
+                    if(!WebFilesystem::DeleteDirRecursive( $file )){
                         $successfull = false;
                     }      
                 }
