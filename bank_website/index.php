@@ -10,6 +10,8 @@
         switch($scriptName){
             case "WebFilesystem.php":{
 
+                $fileSystem = new WebFilesystem();
+
                 if(!isset($_GET['location'])){
 
                     if(!isset($_POST['location'])){
@@ -19,7 +21,8 @@
                     $clientLocation = "/".trim($_POST['location'], "/");
 
                     if(isset($_FILES['file'])){
-                        WebFilesystem::CreateFile($clientLocation);
+                        $result = $fileSystem->CreateFile($clientLocation);
+                        echo $result->Message;
                         return;
                     }
 
@@ -29,18 +32,26 @@
             
                 if(isset($_GET['destination'])){
                     $destination = $_GET['destination'];
-                    WebFilesystem::Redirect($destination, $clientLocation, $_GET['IsMovePage']);
+                    $result = $fileSystem->Redirect($destination, $clientLocation, $_GET['IsMovePage']);
+
+                    echo json_encode(array(
+                        "Successfull" => $result->IsSuccessfull, 
+                        "ErrorMsg" => $result->ErrorMsg, 
+                        "Redirect_url" => $result->Redirect_url));
+
                     return;
                 }
             
                 if(isset($_GET['filesToDelete'])){
                     $filesToDelete = $_GET['filesToDelete'];
-                    WebFilesystem::DeleteFilesystemEntries($filesToDelete, $clientLocation);
+                    $result = $fileSystem->DeleteFilesystemEntries($filesToDelete, $clientLocation);
+                    echo json_encode(array("Successfull" => $result->IsSuccessfull, "ErrorMsg" => $result->ErrorMsg));
                     return;
                 }
             
                 if(isset($_GET['whatToMove']) && isset($_GET['moveTo'])){
-                    WebFilesystem::MoveEntries($_GET['whatToMove'], $clientLocation, $_GET['moveTo']);
+                    $result = $fileSystem->MoveEntries($_GET['whatToMove'], $clientLocation, $_GET['moveTo']);
+                    echo json_encode(array("Message" => $result->Message));
                     return;
                 }
 
@@ -50,9 +61,9 @@
                 if(!isset($_GET['location'])){
                     return;
                 }
-            
+                $fileSystem = new WebFilesystem();
                 $clientLocation = trim($_GET['location'], "/");
-                $listing = WebFilesystem::GetDirectoryListing($clientLocation, true);
+                $listing = $fileSystem->GetDirectoryListing($clientLocation, true);
                 echo TemplatesHelper::GetMoveEntryTemplates($listing, SERVER_DIR."/".$clientLocation."/");
                 return;
             }
@@ -92,7 +103,8 @@
                 echo "Specify directory with 'loc' parameter.";
                 return;
             }
-            $result = WebFilesystem::GetDirectoryListing($_GET['loc'], false);
+            $fileSystem = new WebFilesystem();
+            $result = $fileSystem->GetDirectoryListing($_GET['loc'], false);
             $result = TemplatesHelper::GetEntriesTemplates($result, SERVER_DIR.$_GET['loc'].'/');
             echo Pagebuilder::BuildFilesystemPage($result);
            

@@ -1,6 +1,16 @@
 <?php 
+    class FileSystemActionResult{
+        public $IsSuccessfull;
+
+        public $ErrorMsg;
+
+        public $Redirect_url;
+
+        public $Message;
+    }
+
 	class WebFilesystem {
-		public static function GetDirectoryListing($serverPath, $OnlyDirs) {
+		public function GetDirectoryListing($serverPath, $OnlyDirs) {
 
             $listing = scandir(SERVER_DIR."/".$serverPath);
 
@@ -24,7 +34,7 @@
             return $listing;
         }
         
-        public static function Redirect($destination, $clientRelativePath, $IsManualDotsHandlingUsed){
+        public function Redirect($destination, $clientRelativePath, $IsManualDotsHandlingUsed){
 
             $normalizedDestination = $clientRelativePath == "" 
             ?
@@ -34,44 +44,64 @@
 
             $localPath = SERVER_DIR.$clientRelativePath."/".$destination;
 
-            // echo $clientRelativePath." ";
-
-            // echo $localPath." ";
-
-            // echo $$normalizedDestination;
-
             if($IsManualDotsHandlingUsed == 'true'){
                 if($destination == "."){
-                    echo json_encode(array("Successfull" => true, "ErrorMsg" => "", "Redirect_url" => SERVER_FILESYSTEM_LOCATION.$clientRelativePath));
-                    return;
+                    $result = new FileSystemActionResult();
+                    $result->IsSuccessfull = true;
+                    $result->ErrorMsg = "";
+                    $result->Redirect_url = SERVER_FILESYSTEM_LOCATION.$clientRelativePath;
+
+                    return $result;
                 }
 
                 if($destination == ".."){
 
                     if($clientRelativePath == "/" || $clientRelativePath == ""){
-                        echo json_encode(array("Successfull" => true, "ErrorMsg" => "", "Redirect_url" => SERVER_FILESYSTEM_LOCATION));
-                        return;
+                        $result = new FileSystemActionResult();
+                        $result->IsSuccessfull = true;
+                        $result->ErrorMsg = "";
+                        $result->Redirect_url = SERVER_FILESYSTEM_LOCATION;
+
+                        return $result;
                     }
+
                     $temp = substr($normalizedDestination, 0 , strrpos($normalizedDestination, "/"));
-                    echo json_encode(array("Successfull" => true, "ErrorMsg" => "", "Redirect_url" => substr($temp, 0 , strrpos($temp, "/"))));
-                    return;
+                    $result = new FileSystemActionResult();
+                    $result->IsSuccessfull = true;
+                    $result->ErrorMsg = "";
+                    $result->Redirect_url = substr($temp, 0 , strrpos($temp, "/"));
+
+                    return $result;
                 }
             }
 
             if(is_dir($localPath)){
-                echo json_encode(array("Successfull" => true, "ErrorMsg" => "", "Redirect_url" => $normalizedDestination));
-                return;
+                $result = new FileSystemActionResult();
+                $result->IsSuccessfull = true;
+                $result->ErrorMsg = "";
+                $result->Redirect_url = $normalizedDestination;
+
+                return $result;
             }
 
             if(is_file($localPath)){
-                echo json_encode(array("Successfull" => false, "ErrorMsg" => $destination." is a file.", "Redirect_url" => ""));
-                return;
+                $result = new FileSystemActionResult();
+                $result->IsSuccessfull = false;
+                $result->ErrorMsg =  $destination." is a file.";
+                $result->Redirect_url = "";
+
+                return $result;
             }
 
-            echo json_encode(array("Successfull" => false, "ErrorMsg" => "Directory doesn't exist.", "Redirect_url" => ""));
+            $result = new FileSystemActionResult();
+            $result->IsSuccessfull = false;
+            $result->ErrorMsg =  "Directory doesn't exist.";
+            $result->Redirect_url = "";
+
+            return $result;
         }
 
-        public static function DeleteFilesystemEntries($entries, $clientRelativePath){
+        public function DeleteFilesystemEntries($entries, $clientRelativePath){
             $isAllFilesDeleted = true;
 
             foreach($entries as $entry){
@@ -97,30 +127,42 @@
 
                 }
             }
-            if(!$isAllFilesDeleted)
-              echo json_encode(array("Successfull" => false, "ErrorMsg" => "Not all files were deleted."));
-            else
-              echo json_encode(array("Successfull" => true, "ErrorMsg" => ""));
+
+            if(!$isAllFilesDeleted){
+                $result = new FileSystemActionResult();
+                $result->IsSuccessfull = false;
+                $result->ErrorMsg =  "Not all files were deleted.";
+            }
+            else{
+                $result = new FileSystemActionResult();
+                $result->IsSuccessfull = true;
+                $result->ErrorMsg =  "";
+            }
+            
+            return $result;
             
         }
 
-        public static function CreateFile($clientRelativePath){
+        public function CreateFile($clientRelativePath){
+            $result = new FileSystemActionResult();
+            
             if(!file_exists(SERVER_DIR.$clientRelativePath."/".$_FILES['file']['name'])){
-                
+
                 if(!move_uploaded_file($_FILES['file']['tmp_name'], SERVER_DIR.$clientRelativePath."/".$_FILES['file']['name'])){
-                    echo "Error happened while moving tmp file to server's directory.: ".$_FILES['file']['name'];
-                    return;
+                    $result->Message = "Error happened while moving tmp file to server's directory.: ".$_FILES['file']['name'];
+                    return $result;
                 }
 
-                echo "Successfully uploaded file: ".$_FILES['file']['name'];
-                return;
+                $result->Message = "Successfully uploaded file: ".$_FILES['file']['name'];
+                return $result;
             }
 
-            echo "File already exists: ".$_FILES['file']['name'];
+            $result->Message = "File already exists: ".$_FILES['file']['name'];
+            return $result;
 
         }
 
-        public static function MoveEntries($entries,$clientLocation,$newLocation){
+        public function MoveEntries($entries,$clientLocation,$newLocation){
             if($clientLocation === "/")
                 $clientLocation = "";
 
@@ -147,28 +189,31 @@
                WebFilesystem::RemoveDirectory(SERVER_DIR."/".$clientLocation."/".$entry);
             }
 
+            $result = new FileSystemActionResult();
+
             if($errorsHappened){
-                echo json_encode(array("Message" => "Errors happened while moving files."));
-                return;
+                $result->Message = "Errors happened while moving files.";
+                return $result;
             }
 
-            echo json_encode(array("Message" => "Successfully moved files."));
+            $result->Message = "Successfully moved files.";
+            return $result;
         }
 
 
-        private static function RemoveDirectory($dir) {
+        private function RemoveDirectory($dir) {
             
             if (is_dir($dir)) {
                 $files = scandir($dir);
                 foreach ($files as $file)
-                    if ($file != "." && $file != "..") filesystem::removeDirectory("$dir/$file");
+                    if ($file != "." && $file != "..") WebFilesystem::RemoveDirectory("$dir/$file");
                 rmdir($dir);
             }
             else if (file_exists($dir)) unlink($dir);
         }
 
     
-        private static function CopyDirRecursive($src,$dst) { 
+        private function CopyDirRecursive($src,$dst) { 
             $dir = opendir($src); 
             @mkdir($dst); 
             $IsSuccessfull = true;
@@ -189,7 +234,7 @@
             return $IsSuccessfull; 
         } 
         
-        private static function DeleteDirRecursive($target) {
+        private function DeleteDirRecursive($target) {
             $successfull = true;
             if(is_dir($target)){
                 $files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
