@@ -10,7 +10,7 @@
     }
 
 	class WebFilesystem {
-		public function GetDirectoryListing($serverPath, $OnlyDirs) {
+		public function GetDirectoryListing(string $serverPath, bool $OnlyDirs) {
 
             $listing = scandir(SERVER_DIR."/".$serverPath);
 
@@ -34,7 +34,7 @@
             return $listing;
         }
         
-        public function Redirect($destination, $clientRelativePath, $IsManualDotsHandlingUsed){
+        public function Redirect(string $destination,string $clientRelativePath,bool $IsManualDotsHandlingUsed) : FileSystemActionResult{
 
             $normalizedDestination = $clientRelativePath == "" 
             ?
@@ -101,7 +101,7 @@
             return $result;
         }
 
-        public function DeleteFilesystemEntries($entries, $clientRelativePath){
+        public function DeleteFilesystemEntries($entries, $clientRelativePath) : FileSystemActionResult{
             $isAllFilesDeleted = true;
 
             foreach($entries as $entry){
@@ -143,7 +143,7 @@
             
         }
 
-        public function CreateFile($clientRelativePath){
+        public function CreateFile($clientRelativePath) : FileSystemActionResult{
             $result = new FileSystemActionResult();
             
             if(!file_exists(SERVER_DIR.$clientRelativePath."/".$_FILES['file']['name'])){
@@ -162,7 +162,7 @@
 
         }
 
-        public function MoveEntries($entries,$clientLocation,$newLocation){
+        public function MoveEntries($entries,$clientLocation,$newLocation) : FileSystemActionResult {
             if($clientLocation === "/")
                 $clientLocation = "";
 
@@ -201,7 +201,7 @@
         }
 
 
-        private function RemoveDirectory($dir) {
+        private function RemoveDirectory($dir) : void {
             
             if (is_dir($dir)) {
                 $files = scandir($dir);
@@ -213,7 +213,7 @@
         }
 
     
-        private function CopyDirRecursive($src,$dst) { 
+        private function CopyDirRecursive($src,$dst) : bool { 
             $dir = opendir($src); 
             @mkdir($dst); 
             $IsSuccessfull = true;
@@ -234,7 +234,7 @@
             return $IsSuccessfull; 
         } 
         
-        private function DeleteDirRecursive($target) {
+        private function DeleteDirRecursive($target) : bool {
             $successfull = true;
             if(is_dir($target)){
                 $files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned

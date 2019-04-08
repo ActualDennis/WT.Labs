@@ -4,13 +4,13 @@
 
 	class TemplatesHelper {
 
-		public static function ResolveDateTimeTemplate($pagePath) {
+		public static function ResolveDateTimeTemplate($pagePath) : ?string {
             $pagecontents = file_get_contents($pagePath);
             $pagecontents = str_replace("{DATE}", date("D/M/d"), $pagecontents);
             return str_replace("{TIME}", date("H:i:s"), $pagecontents);
         }
 
-        public static function GetEntriesTemplates($entries, $path) {
+        public static function GetEntriesTemplates($entries, $path) : ?string {
             if(!is_array($entries)){
                 print_r($entries);
                 return $entries;
@@ -44,7 +44,7 @@
             return $result;
         }
         
-        public static function GetMoveEntryTemplates($entries, $absolutePath){
+        public static function GetMoveEntryTemplates($entries, $absolutePath) : ?string {
             $entryHtml = file_get_contents("./templates/filesystem_move_entry.html");
             $result = '';
             $tempEntry = '';

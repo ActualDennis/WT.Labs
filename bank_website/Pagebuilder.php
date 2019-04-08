@@ -1,6 +1,6 @@
 <?php 
 	class Pagebuilder {
-		public static function BuildFilesystemPage($fileSystemEntries) {
+		public static function BuildFilesystemPage($fileSystemEntries) : ?string {
             if($fileSystemEntries == FALSE)
                 return "Error happened while building a web-page. Probably you tried to access directory that doesn't exist.";
                 
