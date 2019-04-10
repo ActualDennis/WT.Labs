@@ -42,6 +42,31 @@
                 $db->CloseConnection();
             }
 
+            preg_match('/{ *\t*\n*IF *\t*\n*"([^"]*)" *\t*\n*}([\s\S]*){ *\t*\n*ELSE *\t*\n*}([^;]*);/', $pagecontents, $matches);
+
+            if(!empty($matches)){
+                $result = eval($matches[1]);
+                if($result){
+                    $pagecontents = preg_replace('/{ *\t*\n*IF *\t*\n*"([^"]*)" *\t*\n*}([^{]*){ *\t*\n*ELSE *\t*\n*}([^;]*);/', $matches[2] , $pagecontents);
+                }
+                else{
+                    $pagecontents = preg_replace('/{ *\t*\n*IF *\t*\n*"([^"]*)" *\t*\n*}([^{]*){ *\t*\n*ELSE *\t*\n*}([^;]*);/', $matches[3] , $pagecontents);
+                }
+            }
+
+            preg_match('/{ *\t*\n*IF *\t*\n*"([^"]*)" *\t*\n*}([^;]*);/', $pagecontents, $matches);
+
+            if(!empty($matches)){
+                $result = eval($matches[1]);
+
+                if($result){
+                    $pagecontents = preg_replace('/{ *\t*\n*IF *\t*\n*"([^"]*)" *\t*\n*}([^;]*);/', $matches[2] , $pagecontents);
+                }
+                else{
+                    $pagecontents = preg_replace('/{ *\t*\n*IF *\t*\n*"([^"]*)" *\t*\n*}([^;]*);/', "" , $pagecontents);
+                }
+            }
+
             return $pagecontents;
         }
 

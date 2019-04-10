@@ -98,7 +98,7 @@
             <span class="supportsection__chattile__phonenumber">(228)1488987563</span>
           </div>
         
-    </section>
+  </section>
 
     { FILE = "/templates/testTemplate.html" } 
 
@@ -107,6 +107,15 @@
     { VAR  =   "myVar" }
 
     { DB  =   "myVar" }
+
+    {IF "return Config::SERVER_WEBHOST_RELATIVE == 'localhost';"} 
+    <span>This is local host!</span> 
+    {ELSE} 
+    <span>This is not a local host!</span>; 
+
+    {IF "return Config::SERVER_WEBHOST_RELATIVE == 'localhost1';"} 
+    <span>This is not a local host!</span>;
+
   <footer class="footer">
     <p>
       All users of our online services subject to Privacy Statement and agree to be bound by Terms of Service. Please review. <br><br>

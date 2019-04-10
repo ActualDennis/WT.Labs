@@ -15,8 +15,6 @@
 
       public const FILESYS_WEBPAGE = "filesystem";
 
-      public const DB_CONN_STRING = "filesystem";
-
       public static $VARS;
 
       public static function getUserDefinedConstant($constantName) {
