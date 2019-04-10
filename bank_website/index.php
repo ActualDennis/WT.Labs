@@ -23,12 +23,12 @@
         }
     }
 
-    if(!isset($_GET['page'])){
-        echo "Page was not found on the server.";
+    if(isset($_GET['page'])){
+        $pageName = trim($_GET['page'], '/');
+        $pagePath = '';
+    
+        echo Pagebuilder::BuildPage($pageName);
         return;
     }
 
-    $pageName = trim($_GET['page'], '/');
-    $pagePath = '';
-
-   echo Pagebuilder::BuildPage($pageName);
+   echo "Page was not found on the server.";

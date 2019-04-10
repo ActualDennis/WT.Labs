@@ -12,7 +12,7 @@
 	class WebFilesystem {
 		public function GetDirectoryListing(string $serverPath, bool $OnlyDirs) {
 
-            $listing = scandir(SERVER_DIR."/".$serverPath);
+            $listing = scandir(Config::SERVER_DIR."/".$serverPath);
 
             if($listing == FALSE){
                 return FALSE;
@@ -22,7 +22,7 @@
                 $result = array();
                 
                 foreach($listing as $entry){
-                    if(is_dir(SERVER_DIR."/".$serverPath."/".$entry) || $entry == "." || $entry == ".."){
+                    if(is_dir(Config::SERVER_DIR."/".$serverPath."/".$entry) || $entry == "." || $entry == ".."){
                         array_push($result, $entry);
                     }
                 }
@@ -38,18 +38,18 @@
 
             $normalizedDestination = $clientRelativePath == "" 
             ?
-            SERVER_FILESYSTEM_LOCATION.$clientRelativePath.$destination 
+            Config::SERVER_FILESYSTEM_LOCATION.$clientRelativePath.$destination 
             :
-            SERVER_FILESYSTEM_LOCATION.$clientRelativePath."/".$destination; 
+            Config::SERVER_FILESYSTEM_LOCATION.$clientRelativePath."/".$destination; 
 
-            $localPath = SERVER_DIR.$clientRelativePath."/".$destination;
+            $localPath = Config::SERVER_DIR.$clientRelativePath."/".$destination;
 
             if($IsManualDotsHandlingUsed == 'true'){
                 if($destination == "."){
                     $result = new FileSystemActionResult();
                     $result->IsSuccessfull = true;
                     $result->ErrorMsg = "";
-                    $result->Redirect_url = SERVER_FILESYSTEM_LOCATION.$clientRelativePath;
+                    $result->Redirect_url = Config::SERVER_FILESYSTEM_LOCATION.$clientRelativePath;
 
                     return $result;
                 }
@@ -60,7 +60,7 @@
                         $result = new FileSystemActionResult();
                         $result->IsSuccessfull = true;
                         $result->ErrorMsg = "";
-                        $result->Redirect_url = SERVER_FILESYSTEM_LOCATION;
+                        $result->Redirect_url = Config::SERVER_FILESYSTEM_LOCATION;
 
                         return $result;
                     }
@@ -110,7 +110,7 @@
                     continue;
                 }
 
-                $localPath = SERVER_DIR.$clientRelativePath."/".$entry;
+                $localPath = Config::SERVER_DIR.$clientRelativePath."/".$entry;
                 $localPath = str_replace("//", "/", $localPath );
 
                 if(is_file($localPath)){
@@ -146,9 +146,9 @@
         public function CreateFile($clientRelativePath) : FileSystemActionResult{
             $result = new FileSystemActionResult();
             
-            if(!file_exists(SERVER_DIR.$clientRelativePath."/".$_FILES['file']['name'])){
+            if(!file_exists(Config::SERVER_DIR.$clientRelativePath."/".$_FILES['file']['name'])){
 
-                if(!move_uploaded_file($_FILES['file']['tmp_name'], SERVER_DIR.$clientRelativePath."/".$_FILES['file']['name'])){
+                if(!move_uploaded_file($_FILES['file']['tmp_name'], Config::SERVER_DIR.$clientRelativePath."/".$_FILES['file']['name'])){
                     $result->Message = "Error happened while moving tmp file to server's directory.: ".$_FILES['file']['name'];
                     return $result;
                 }
@@ -175,18 +175,18 @@
                     continue;
                 }
 
-                if(is_file(SERVER_DIR.$clientLocation."/".$entry)){
-                    if(!rename(SERVER_DIR.$clientLocation."/".$entry, SERVER_DIR.$newLocation."/".$entry)){
+                if(is_file(Config::SERVER_DIR.$clientLocation."/".$entry)){
+                    if(!rename(Config::SERVER_DIR.$clientLocation."/".$entry, Config::SERVER_DIR.$newLocation."/".$entry)){
                         $errorsHappened = true;
                     }
                     continue;
                 }
 
-               if(!WebFilesystem::CopyDirRecursive(SERVER_DIR."/".$clientLocation."/".$entry, SERVER_DIR.$newLocation)){
+               if(!WebFilesystem::CopyDirRecursive(Config::SERVER_DIR."/".$clientLocation."/".$entry, Config::SERVER_DIR.$newLocation)){
                     $errorsHappened = true;
                }
 
-               WebFilesystem::RemoveDirectory(SERVER_DIR."/".$clientLocation."/".$entry);
+               WebFilesystem::RemoveDirectory(Config::SERVER_DIR."/".$clientLocation."/".$entry);
             }
 
             $result = new FileSystemActionResult();

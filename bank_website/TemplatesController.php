@@ -16,6 +16,6 @@ class TemplatesController{
 
         $clientLocation = trim($_GET['location'], "/");
         $listing = $this->WebFilesystem->GetDirectoryListing($clientLocation, true);
-        return TemplatesHelper::GetMoveEntryTemplates($listing, SERVER_DIR."/".$clientLocation."/");
+        return TemplatesHelper::GetMoveEntryTemplates($listing, Config::SERVER_DIR."/".$clientLocation."/");
     }
 }

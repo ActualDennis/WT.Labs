@@ -1,6 +1,7 @@
 <?php
     require_once('WebFilesystem.php');
-
+    require_once('config.php');
+    require_once('DbHelper.php');
 
 	class TemplatesHelper {
 
@@ -10,9 +11,42 @@
             return str_replace("{TIME}", date("H:i:s"), $pagecontents);
         }
 
+        public static function ResolveDefaultTemplates($pagePath) : ?string {
+            $pagecontents = file_get_contents($pagePath);
+            $pagecontents = str_replace("{DATE}", date("D/M/d"), $pagecontents);
+            $pagecontents = str_replace("{TIME}", date("H:i:s"), $pagecontents);
+            preg_match('/{ *\t*\n*FILE *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', $pagecontents, $matches);
+
+            if(!empty($matches)){
+                $pagecontents = preg_replace('/{ *\t*\n*FILE *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', file_get_contents(Config::SERVER_CORE_DIR.$matches[1]), $pagecontents);
+            }
+
+            preg_match('/{ *\t*\n*CONFIG *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', $pagecontents, $matches);
+
+            if(!empty($matches)){
+                $pagecontents = preg_replace('/{ *\t*\n*CONFIG *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', Config::getUserDefinedConstant($matches[1]), $pagecontents);
+            }
+
+            preg_match('/{ *\t*\n*VAR *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', $pagecontents, $matches);
+
+            if(!empty($matches)){
+                $pagecontents = preg_replace('/{ *\t*\n*VAR *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', Config::getRuntimeVar($matches[1]), $pagecontents);
+            }
+
+            preg_match('/{ *\t*\n*DB *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', $pagecontents, $matches);
+
+            if(!empty($matches)){
+                $db = new DbHelper();
+                $db->OpenConnection();
+                $pagecontents = preg_replace('/{ *\t*\n*DB *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', $db->GetConfigVar($matches[1]) , $pagecontents);
+                $db->CloseConnection();
+            }
+
+            return $pagecontents;
+        }
+
         public static function GetEntriesTemplates($entries, $path) : ?string {
             if(!is_array($entries)){
-                print_r($entries);
                 return $entries;
             }
 

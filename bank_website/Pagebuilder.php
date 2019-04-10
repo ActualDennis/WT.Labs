@@ -6,7 +6,7 @@
             $pageFactory = new PagePathFactory();
 
             if($pageFactory->IsResolvablePage($pageName)){
-                return TemplatesHelper::ResolveDateTimeTemplate($pageFactory->GetPagePath($pageName));
+                return TemplatesHelper::ResolveDefaultTemplates($pageFactory->GetPagePath($pageName));
             }
 
             if(strtoupper($pageName) == "FILESYSTEM"){
@@ -17,7 +17,7 @@
 
                 $fileSystem = new WebFilesystem();
                 $result = $fileSystem->GetDirectoryListing($_GET['loc'], false);
-                $result = TemplatesHelper::GetEntriesTemplates($result, SERVER_DIR.$_GET['loc'].'/');
+                $result = TemplatesHelper::GetEntriesTemplates($result, Config::SERVER_DIR.$_GET['loc'].'/');
                 return Pagebuilder::BuildFilesystemPage($result);
             }
         }
