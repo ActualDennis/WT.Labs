@@ -22,8 +22,13 @@ class DbHelper{
         $result = $this->dbConnection->query($sql);
 
         if ($result->num_rows > 0) {
-           $row = $result->fetch_assoc();
-           return $row[$varName] ?? "Undefined"; 
+            while($row = $result->fetch_assoc()) {
+               if($row["Config_Varname"] == $varName){
+                    return $row["Config_Value"];
+               }  
+            }
+
+            return "Undefined";
         }
         else{
             return "Undefined";
