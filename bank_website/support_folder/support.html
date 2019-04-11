@@ -118,19 +118,59 @@
     <span>This is not a local host!</span>; -->
 
     <footer class="footer">
-        <div class="footer__wrapper">
-    
-            <div class="footer__wrapper__links">
-                <a href="/sitemap" role="button" class="btn btn-link">Site map</a> 
-                <button class="btn btn-link">Subscribe to our newsletter</button>
-            </div>
-    
-            <p>
-                All users of our online services subject to Privacy Statement and agree to be bound by Terms of Service. Please review. <br><br>
-                © 2019 Non-existent company. All rights are not reserved 
-            </p>
+      <div class="footer__wrapper">
+  
+          <div class="footer__wrapper__links">
+              <a href="/sitemap" role="button" class="btn btn-link">Site map</a> 
+              <button onclick="RemoveNewsLetterAlerts()" class="btn btn-link" data-toggle="modal" data-target="#newsletter_modal">Subscribe to our newsletter</button>
+          </div>
+  
+          <p>
+              All users of our online services subject to Privacy Statement and agree to be bound by Terms of Service. Please review. <br><br>
+              © 2019 Non-existent company. All rights are not reserved 
+          </p>
+      </div>
+  </footer>
+  
+  <div class="modal fade" id="newsletter_modal" tabindex="-1" role="dialog" aria-labelledby="newsletter_modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="upload_modalLabel">Subsribe to our newsletter</h5>
+          <button type="button" id="move_close_button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-    </footer>
+        <div class="modal-body" id="move_modal_body" style="text-align: center;">
+              <div class="alert alert-danger fade show" role="alert" id="newsletter_error">
+  
+                <span id="newsletter_error-label"></span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+  
+              <div class="alert alert-success fade show" role="alert" id="newsletter_success">
+                <span>You successfully subscribed to our newsletter.</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+  
+              <label for="newsLetterEmailInput">Email address</label>
+              <input type="email" class="form-control" id="newsLetterEmailInput" aria-describedby="emailHelp" placeholder="Enter email">
+              
+            <button onclick="subscribeToNewsLetter()" style="margin-top: 5%;" class="btn btn-info">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="/scripts/newsletter.js"></script>
+  
   
 
 </body>

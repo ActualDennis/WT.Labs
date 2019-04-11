@@ -5,6 +5,7 @@
     require_once('Pagebuilder.php');
     require_once('WebfilesystemController.php');
     require_once('TemplatesController.php');
+    require_once('NewsLetterController.php');
 
     if(isset($_GET['script'])){
 
@@ -18,6 +19,11 @@
             case "TemplatesHelper.php":{
                 $templatesController = new TemplatesController();
                 echo $templatesController->GetResponse();
+                return;
+            }
+            case "Newsletter.php":{
+                $newsController = new NewsLetterController();
+                echo $newsController->GetResponse();
                 return;
             }
         }

@@ -73,4 +73,31 @@ class DbHelper{
         
         return $categories;
     }
+
+    public function RegisterForNewsLetter($email) : bool {
+        $sql = 
+        "SELECT Subscriber_Id, Email FROM newslettersubscribers
+         WHERE Email='$email'";
+
+
+        $result = $this->dbConnection->query($sql);
+
+        if(!$result)
+            return false;
+    
+        if(mysqli_num_rows($result) != 0){
+            return false;
+        }
+
+        $sql = 
+        "INSERT INTO `newslettersubscribers` (`Subscriber_Id`, `Email`) VALUES (NULL, '$email')";
+
+        $result = $this->dbConnection->query($sql);
+
+        if(!$result){
+            return false;
+        }
+
+        return true;
+    }
 }
