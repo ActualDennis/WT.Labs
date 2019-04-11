@@ -8,13 +8,17 @@ class DbHelper{
 
     private $dbConnection;
 
-    public const defaultDbName = "webconfiguration";
+    public const defaultDbName = "BankDb";
 
     public function OpenConnection() : void {
         $this->dbConnection = new mysqli(Config::SERVER_WEBHOST_RELATIVE, DbHelper::$login, DbHelper::$pass, DbHelper::defaultDbName);
         if ($this->dbConnection->connect_error) {
             die("Connection failed: " .$this->dbConnection->connect_error);
         } 
+    }
+    
+    public function CloseConnection(){
+        $this->dbConnection->close();
     }
 
     public function GetConfigVar($varName){
@@ -35,7 +39,38 @@ class DbHelper{
         }
     }
 
-    public function CloseConnection(){
-        $this->dbConnection->close();
+    public function GetSiteMapCategories() : array {
+        $sql = 
+        "SELECT sitehrefs.Link_Id, sitehrefs.Href, sitehrefs.LinkName, categories.Category_Id, categories.CategoryName  
+        FROM sitehrefscategories
+        INNER JOIN sitehrefs ON sitehrefs.Link_Id=sitehrefscategories.Link_Id
+        INNER JOIN categories ON categories.Category_Id=sitehrefscategories.Category_Id";
+
+        $result = $this->dbConnection->query($sql);
+        $categories = array();
+        $category = array();
+        $lastCategoryId = 0;
+
+        while($row = $result->fetch_assoc()) {
+
+            if($row["Category_Id"] != $lastCategoryId && $lastCategoryId != 0){
+
+                $lastCategoryId = $row["Category_Id"];
+                array_push($categories, $category);
+                $category = array();
+            }else if ($lastCategoryId == 0){
+                $lastCategoryId = $row["Category_Id"];
+            }
+            $category["CategoryName"] = $row["CategoryName"];
+            $keyValuePair = array();
+            $keyValuePair["Href"] = $row["Href"];
+            $keyValuePair["LinkName"] = $row["LinkName"];
+
+            array_push($category, $keyValuePair);
+        }
+
+        array_push($categories, $category);
+        
+        return $categories;
     }
 }

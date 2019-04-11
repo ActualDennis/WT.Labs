@@ -9,7 +9,9 @@
                 return TemplatesHelper::ResolveDefaultTemplates($pageFactory->GetPagePath($pageName));
             }
 
-            if(strtoupper($pageName) == "FILESYSTEM"){
+            $pageNameNormalized = strtoupper($pageName);
+
+            if($pageNameNormalized == "FILESYSTEM"){
 
                 if(!isset($_GET['loc'])){
                     return "Specify directory with 'loc' parameter.";
@@ -20,6 +22,10 @@
                 $result = TemplatesHelper::GetEntriesTemplates($result, Config::SERVER_DIR.$_GET['loc'].'/');
                 return Pagebuilder::BuildFilesystemPage($result);
             }
+
+            if($pageNameNormalized == "SITEMAP"){
+                return Pagebuilder::BuildSiteMapPage();
+            }
         }
 
 
@@ -29,7 +35,13 @@
                 
             $pageContents = file_get_contents("./templates/filesystem_template.html");
             
-            return str_replace("{ENTRIES}", $fileSystemEntries, $pageContents);
+            return TemplatesHelper::ResolveFileSystemEntriesTemplate($fileSystemEntries, $pageContents);
+        }
+
+        private static function BuildSiteMapPage() : ?string{
+            $pageContents = file_get_contents("./sitemap_folder/sitemap.html");
+
+            return TemplatesHelper::ResolveSitemapTemplate($pageContents);
         }
         
 	}

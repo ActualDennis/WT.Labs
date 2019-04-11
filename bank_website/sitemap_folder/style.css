@@ -66,10 +66,6 @@ textarea, select, input, button { outline: none; }
     box-shadow: none; 
 }
 
-.header .header__tile__button{
-    text-align: center;
-}
-
 .header .header__tile__button .button__text{
     color:black;
 }
@@ -88,24 +84,6 @@ header .header__tile__button .button__text:link{
 
 .header__tile__button .button__icon{
     width: 100%;
-}
-
-.welcomesection{
-    background-image: url(/about_folder/welcome-1134x800.jpg);
-    background-size: cover;
-    background-position: center top;
-}
-
-.welcomesection__welcomeblock{
-    background-color: white;
-}
-
-.welcomesection__welcomeblock{
-    color:black;
-}
-
-.welcomeaboutsection{
-    text-align: center;
 }
 
 .header__tile__button .button__text{
@@ -131,4 +109,22 @@ header .header__tile__button .button__text:link{
     padding: 5%;
     display: flex;
     flex-direction: row;
+}
+
+.body__sitemapLabel{
+    text-align: center;
+    padding: 2%;
+}
+
+
+.sitemap{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.sitemap__entry{
+    padding: 5%;
 }

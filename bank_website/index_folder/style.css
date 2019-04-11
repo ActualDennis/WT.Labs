@@ -26,12 +26,6 @@ body{
     color: white;
 }
 
-.footer{
-    display: block;
-    color: black;
-    height: 20px;
-}
-
 .header .header__tilescontainer{
     display: flex;
     flex-direction: row;
@@ -41,7 +35,6 @@ body{
 }
 
 .header__tilescontainer .header__tile{
-    float:left;
     border-left: 1px solid #b4afae;
     transition: all 0.3s ease 0s;
     display: block;
@@ -91,9 +84,8 @@ header .header__tile__button .button__text:link{
     color:black;
 }
 
-
-.header .header__tile__button .button__icon{
-    float:left;
+.header__tile__button .button__icon{
+    width: 100%;
 }
 
 .button{
@@ -121,6 +113,10 @@ header .header__tile__button .button__text:link{
     color: black;
     background-color: white;
     position: relative;
+}
+
+.firstslide__text{
+    color:white;
 }
 
 .firstslide__button:hover{
@@ -326,4 +322,24 @@ header .header__tile__button .button__text:link{
 .header__tile__button .button__text{
     width: 100%;
     height: 100%;
+}
+
+.footer{
+    color:black;
+    font-weight: lighter;
+    background-color: rgb(241, 241, 241);
+    font-size: 14px;    
+}
+
+.footer__wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.footer__wrapper__links{
+    padding: 5%;
+    display: flex;
+    flex-direction: row;
 }

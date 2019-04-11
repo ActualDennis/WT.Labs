@@ -31,17 +31,8 @@ textarea, select, input, button { outline: none; }
 .loginwrapper__logintile{
     display:block;
     background-color: white;
-    max-width: 100px;
-    min-height: 100px;
     margin-left: 40%;
 }
-
-.footer{
-    display: block;
-    color: black;
-    height: 20px;
-}
-
 
 .header .header__tilescontainer{
     display: flex;
@@ -52,7 +43,6 @@ textarea, select, input, button { outline: none; }
 }
 
 .header__tilescontainer .header__tile{
-    float:left;
     border-left: 1px solid #b4afae;
     transition: all 0.3s ease 0s;
     display: block;
@@ -102,10 +92,9 @@ header .header__tile__button .button__text:link{
 }
 
 
-.header .header__tile__button .button__icon{
-    float:left;
+.header__tile__button .button__icon{
+    width: 100%;
 }
-
 
 .loginsection{
     text-align: center;
@@ -180,4 +169,24 @@ header .header__tile__button .button__text:link{
 .header__tile__button .button__text{
     width: 100%;
     height: 100%;
+}
+
+.footer{
+    color:black;
+    font-weight: lighter;
+    background-color: rgb(241, 241, 241);
+    font-size: 14px;    
+}
+
+.footer__wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.footer__wrapper__links{
+    padding: 5%;
+    display: flex;
+    flex-direction: row;
 }

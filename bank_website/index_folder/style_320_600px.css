@@ -44,11 +44,6 @@ body{
     font-size: 16px;
   }
   
-.button:hover{
-    border-radius: 25px;
-    padding: 15px 32px;
-    font-size: 16px;
-}
 
 .slide{
     width: 100%;
@@ -63,21 +58,18 @@ body{
 }
 
 .firstslide__button{
-    width: 120px;
-    height: 10px;
+    width: 50%;
     top: 5%;
     left:10%;
-}
-
-.firstslide__button:hover{
-    width: 120px;
-    height: 10px;
-    top: 5%;
-    left:10%;
+    padding: 2px;
 }
 
 .firstslide__text{
     font-size: 15px;
+}
+
+.firstslide__buttontext{
+    font-size: 13px;
 }
 
 .pagemiddle{

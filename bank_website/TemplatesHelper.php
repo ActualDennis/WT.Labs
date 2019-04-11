@@ -70,6 +70,43 @@
             return $pagecontents;
         }
 
+        public static function ResolveSitemapTemplate($pagecontents) : string{
+            $db = new DbHelper();
+            $db->OpenConnection();
+            $result = $db->GetSiteMapCategories();
+            $db->CloseConnection();
+
+            $categoryTemplate = file_get_contents("./sitemap_folder/sitemap_categorytemplate.html");
+            $categoryEntryTemplate = file_get_contents("./sitemap_folder/sitemap_categoryEntryTemplate.html");
+            $resolved = '';
+
+            foreach($result as $category){
+                $tempCategoryTemplate = str_replace("{CATEGORYNAME}", $category["CategoryName"], $categoryTemplate);
+                $entries = '';
+
+                if(is_array($category)){
+                    foreach($category as $entry){
+                        if(!is_array($entry))
+                            continue;
+
+                        $tempEntryTemplate =  str_replace("{HREF}", $entry["Href"], $categoryEntryTemplate);
+                        $tempEntryTemplate =  str_replace("{ENTRYNAME}", $entry["LinkName"], $tempEntryTemplate);
+                        $entries .= $tempEntryTemplate;
+                    }
+    
+                    $tempCategoryTemplate = str_replace("{ENTRIES}",  $entries, $tempCategoryTemplate);
+    
+                    $resolved .= $tempCategoryTemplate;
+                }
+            }
+
+            return str_replace("{SITEMAPENTRIES}",  $resolved, $pagecontents);
+        }
+
+        public static function ResolveFileSystemEntriesTemplate($filesystemEntries, $pageContents) : string{
+            return str_replace("{ENTRIES}", $filesystemEntries, $pageContents);
+        }
+
         public static function GetEntriesTemplates($entries, $path) : ?string {
             if(!is_array($entries)){
                 return $entries;

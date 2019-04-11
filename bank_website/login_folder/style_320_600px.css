@@ -69,16 +69,15 @@ body{
 
 
 .loginsection__loginwrapper{
-    margin-bottom: 1%;
     height: 100%;
 }
 
 
 .loginsection__loginwrapper__logintile{
-    height: 300px;
     width: 100%;
     margin-bottom: 1%;
     border-radius: 14px;
+    padding: 2%;
     margin-left: 2%;
 }
 
@@ -88,13 +87,11 @@ body{
 }
 
 .loginsection__loginwrapper__logintile .logintile__button{
-    height: 25%;
     border-radius: 10px;
 }
 
 .loginsection__loginwrapper__logintile .logintile__button{
     width: 40%;
-    max-height: 10%;
     margin-left: 30%;
     margin-top: 5%;
     font-size: 20px;
@@ -111,3 +108,14 @@ body{
 .logintile__header{
     font-size: 25px;
 }
+
+.logintile__field{
+    width: 40%;
+    height: 10%;
+    font-size: 20px;
+    padding: 1.5%;
+    border: none; 
+    border:solid 1px #ccc;
+    border-radius: 15px;
+}
+

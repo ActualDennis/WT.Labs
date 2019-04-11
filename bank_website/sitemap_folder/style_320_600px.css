@@ -2,7 +2,6 @@ body{
     color:white;
     font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Myriad Pro', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 }
-
 .header__logoreference{
     display:block;
     width: 100%;
@@ -41,17 +40,17 @@ body{
 }
 
 .header{
-    height: 60px;
+    height: 80px;
     width: 100%;
 }
 
 .header .header__tilescontainer{
     height: 100%;
-    min-width: 60%;
+    min-width: 70%;
 }
 
 .header__tilescontainer .header__tile{
-    font-size: 13px;
+    font-size: 17px;
     height: 100%;
     padding: 1%;
 }
@@ -67,60 +66,4 @@ body{
 
 .header .header__tile__button .button__text{
     padding-left: 4px;
-}
-
-.welcomesection{
-    padding-top: 30%;
-    padding-left: 5%;
-    height: 600px;
-    width: 100%;
-}
-
-.welcomesection__welcomeblock{
-    padding-left: 5%;
-    padding-top: 5%;
-    min-height: 200px;
-    max-height: 400px;
-    width: 70%;
-}
-
-.welcomesection__welcomeblock__title{
-    font-weight: lighter;
-    font-size: 20px;
-}
-
-.welcomesection__welcomeblock__title::after{
-    display: block;
-    content: '';
-    width: 100px;
-    height: 4px;
-    margin-top: 10px;
-    background-color: black;
-}
-
-.welcomeaboutsection__header{
-    font-weight: lighter;
-    font-size: 40px;
-    padding-bottom: 50px;
-}
-
-.welcomeaboutsection__header__after{
-    display: inline-block;
-    content: '';
-    width: 200px;
-    height: 4px;
-    margin-top: 10px;
-    background-color: black;
-}
-
-.welcomeaboutsection{
-    padding-top: 50px;
-    color:black;
-}
-
-.welcomeaboutsection__mainarticle{
-    text-align: start;
-    font-weight: lighter;
-    font-size: 13px;
-    padding:  20px;
 }

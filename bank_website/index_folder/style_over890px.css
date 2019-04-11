@@ -71,18 +71,11 @@ body{
 }
 
 .firstslide__button{
-    width: 120px;
-    height: 20px;
     top: 5%;
     left:30%;
+    width: 15%;
 }
 
-.firstslide__button:hover{
-    width: 120px;
-    height: 20px;
-    top: 5%;
-    left:30%;
-}
 
 .pagemiddle{
     height: 580px;
