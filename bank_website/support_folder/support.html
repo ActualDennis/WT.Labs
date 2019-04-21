@@ -101,21 +101,23 @@
         
   </section>
 
-    <!-- { FILE = "/templates/testTemplate.html" } 
+    { FILE = "/templates/testTemplate.html" } 
 
     { CONFIG  =   "SERVER_CORE_DIR" }
 
     { VAR  =   "myVar" }
 
-    { DB  =   "myVar" }
+    { DB  =   "Test_Var" }
 
-    {IF "return Config::SERVER_WEBHOST_RELATIVE == 'localhost';"} 
+    {IF "return { CONFIG  =   "SERVER_WEBHOST_RELATIVE" } == 'localhost';"} 
     <span>This is local host!</span> 
     {ELSE} 
-    <span>This is not a local host!</span>; 
+    <span>This is not a local host!</span>
+    {ENDIF}
 
-    {IF "return Config::SERVER_WEBHOST_RELATIVE == 'localhost1';"} 
-    <span>This is not a local host!</span>; -->
+    {IF "return { CONFIG  =   "SERVER_WEBHOST_RELATIVE" } == 'localhost1';"} 
+    <span>This is not a local host!</span>
+    {ENDIF}
 
     <footer class="footer">
       <div class="footer__wrapper">

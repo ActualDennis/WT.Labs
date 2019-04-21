@@ -15,57 +15,83 @@
             $pagecontents = file_get_contents($pagePath);
             $pagecontents = str_replace("{DATE}", date("D/M/d"), $pagecontents);
             $pagecontents = str_replace("{TIME}", date("H:i:s"), $pagecontents);
-            preg_match('/{ *\t*\n*FILE *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', $pagecontents, $matches);
 
-            if(!empty($matches)){
-                $pagecontents = preg_replace('/{ *\t*\n*FILE *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', file_get_contents(Config::SERVER_CORE_DIR.$matches[1]), $pagecontents);
-            }
+            $fileRegex = '/{ *\t*\n*FILE *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/';
 
-            preg_match('/{ *\t*\n*CONFIG *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', $pagecontents, $matches);
+            do{
+                preg_match($fileRegex, $pagecontents, $matches);
 
-            if(!empty($matches)){
-                $pagecontents = preg_replace('/{ *\t*\n*CONFIG *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', Config::getUserDefinedConstant($matches[1]), $pagecontents);
-            }
+                if(!empty($matches)){
+                    $pagecontents = preg_replace($fileRegex, file_get_contents(Config::SERVER_CORE_DIR.$matches[1]), $pagecontents, 1);
+                }    
+            } while(!empty($matches));
 
-            preg_match('/{ *\t*\n*VAR *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', $pagecontents, $matches);
+            $configRegex = '/{ *\t*\n*CONFIG *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/';
 
-            if(!empty($matches)){
-                $pagecontents = preg_replace('/{ *\t*\n*VAR *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', Config::getRuntimeVar($matches[1]), $pagecontents);
-            }
-
-            preg_match('/{ *\t*\n*DB *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', $pagecontents, $matches);
-
-            if(!empty($matches)){
-                $db = new DbHelper();
-                $db->OpenConnection();
-                $pagecontents = preg_replace('/{ *\t*\n*DB *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/', $db->GetConfigVar($matches[1]) , $pagecontents);
-                $db->CloseConnection();
-            }
-
-            preg_match('/{ *\t*\n*IF *\t*\n*"([^"]*)" *\t*\n*}([\s\S]*){ *\t*\n*ELSE *\t*\n*}([^;]*);/', $pagecontents, $matches);
-
-            if(!empty($matches)){
-                $result = eval($matches[1]);
-                if($result){
-                    $pagecontents = preg_replace('/{ *\t*\n*IF *\t*\n*"([^"]*)" *\t*\n*}([^{]*){ *\t*\n*ELSE *\t*\n*}([^;]*);/', $matches[2] , $pagecontents);
+            do{
+                preg_match($configRegex, $pagecontents, $matches);
+    
+                if(!empty($matches)){
+                    $pagecontents = preg_replace($configRegex, "'".Config::getUserDefinedConstant($matches[1])."'", $pagecontents, 1);
                 }
-                else{
-                    $pagecontents = preg_replace('/{ *\t*\n*IF *\t*\n*"([^"]*)" *\t*\n*}([^{]*){ *\t*\n*ELSE *\t*\n*}([^;]*);/', $matches[3] , $pagecontents);
-                }
-            }
+            } while(!empty($matches));
 
-            preg_match('/{ *\t*\n*IF *\t*\n*"([^"]*)" *\t*\n*}([^;]*);/', $pagecontents, $matches);
+            $varRegex = '/{ *\t*\n*VAR *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/';
 
-            if(!empty($matches)){
-                $result = eval($matches[1]);
+            do{
+                preg_match($varRegex, $pagecontents, $matches);
 
-                if($result){
-                    $pagecontents = preg_replace('/{ *\t*\n*IF *\t*\n*"([^"]*)" *\t*\n*}([^;]*);/', $matches[2] , $pagecontents);
+                if(!empty($matches)){
+                    $pagecontents = preg_replace($varRegex, "'".Config::getRuntimeVar($matches[1])."'", $pagecontents, 1);
                 }
-                else{
-                    $pagecontents = preg_replace('/{ *\t*\n*IF *\t*\n*"([^"]*)" *\t*\n*}([^;]*);/', "" , $pagecontents);
+            } while(!empty($matches));
+
+            $dbRegex = '/{ *\t*\n*DB *\t*\n*= *\t*\n*"([^"]*)" *\t*\n*}/';
+
+            do{
+                preg_match($dbRegex, $pagecontents, $matches);
+
+                if(!empty($matches)){
+                    $db = new DbHelper();
+                    $db->OpenConnection();
+                    $pagecontents = preg_replace($dbRegex, "'".$db->GetConfigVar($matches[1])."'" , $pagecontents, 1);
+                    $db->CloseConnection();
                 }
-            }
+            }while(!empty($matches));
+
+            $ifWithElseRegex = '/{ *\t*\n*IF *\t*\n*"([^"]*)" *\t*\n*}([^{]*){ *\t*\n*ELSE *\t*\n*}([^{]*){ *\t*\n*ENDIF *\t*\n*}/';
+
+            do{
+                preg_match($ifWithElseRegex, $pagecontents, $matches);
+
+                if(!empty($matches)){
+                    $result = eval($matches[1]);
+    
+                    if($result){
+                        $pagecontents = preg_replace($ifWithElseRegex, $matches[2] , $pagecontents, 1);
+                    }
+                    else{
+                        $pagecontents = preg_replace($ifWithElseRegex, $matches[3] , $pagecontents, 1);
+                    }
+                }
+            } while(!empty($matches));
+
+            $ifWithoutElseRegex = '/{ *\t*\n*IF *\t*\n*"([^"]*)" *\t*\n*}([^{]*){ *\t*\n*ENDIF *\t*\n*}/';
+
+            do{
+                preg_match($ifWithoutElseRegex, $pagecontents, $matches);
+
+                if(!empty($matches)){
+                    $result = eval($matches[1]);
+    
+                    if($result){
+                        $pagecontents = preg_replace($ifWithoutElseRegex, $matches[2] , $pagecontents, 1);
+                    }
+                    else{
+                        $pagecontents = preg_replace($ifWithoutElseRegex, "" , $pagecontents, 1);
+                    }
+                }
+            } while(!empty($matches));
 
             return $pagecontents;
         }

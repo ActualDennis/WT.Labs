@@ -26,10 +26,12 @@ class WebfilesystemController{
         $clientLocation = "/".trim($_GET['location'], "/");
     
         if(isset($_GET['destination'])){
+            ActionsLogger::Log(WebsiteActions::TriedToVisitFilesystem, $_GET['destination']);
             return $this->Redirect($clientLocation);
         }
     
         if(isset($_GET['filesToDelete'])){
+            ActionsLogger::Log(WebsiteActions::DeletedFiles, implode( ", ", $_GET['filesToDelete'] ));
             return $this->DeleteFiles($clientLocation);
         }
     
@@ -46,6 +48,10 @@ class WebfilesystemController{
     private function Redirect($clientLocation){
         $destination = $_GET['destination'];
         $result = $this->WebFilesystem->Redirect($destination, $clientLocation, $_GET['IsMovePage']);
+
+        if($result->IsSuccessfull){
+            ActionsLogger::Log(WebsiteActions::VisitedFilesystem, $_GET['destination']);
+        }
 
         return json_encode(array(
             "Successfull" => $result->IsSuccessfull, 

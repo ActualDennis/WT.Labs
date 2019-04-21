@@ -100,4 +100,53 @@ class DbHelper{
 
         return true;
     }
+
+    public function GetNewsLetterEmails(){
+        $sql = 
+        "SELECT Subscriber_Id, Email FROM newslettersubscribers";
+
+        $result = $this->dbConnection->query($sql);
+
+        if(!$result)
+            return false;
+
+        $resultArr = array();
+
+        while($row = $result->fetch_assoc()) {
+            array_push($resultArr, $row["Email"]);
+        }
+
+        return $resultArr;
+    }
+
+    public function LogAction(int $actionKey, string $action){
+        $thisUserIP = $_SERVER['REMOTE_ADDR'];
+
+        $sql =  
+        "SELECT User_Id, IpAddress 
+        FROM website_users
+        WHERE IpAddress='$thisUserIP'";
+
+        $result = $this->dbConnection->query($sql);
+
+        $userAgent = $_SERVER['HTTP_USER_AGENT'];
+
+        $userId = '';
+
+        if(mysqli_num_rows($result) == 0){
+            $sql = "INSERT INTO `website_users` (`User_Id`, `IpAddress`) VALUES (NULL, '$thisUserIP')";
+
+            $result = $this->dbConnection->query($sql);
+
+            $userId = mysqli_insert_id($this->dbConnection);
+        }else{
+            $row = $result->fetch_assoc();
+            $userId = $row['User_Id'];
+        }
+
+        $sql = "INSERT INTO `usersactions` (`Action_Id`, `User_Id`, `UserAgent`, `ActionName`, `nonNormalizedAction_Id`) VALUES (NULL, $userId, '$userAgent', '$action', $actionKey)";
+
+        $this->dbConnection->query($sql);
+    }
+
 }

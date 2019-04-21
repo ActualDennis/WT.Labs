@@ -6,6 +6,8 @@
     require_once('WebfilesystemController.php');
     require_once('TemplatesController.php');
     require_once('NewsLetterController.php');
+    require_once('mailSender.php');
+    require_once('ActionsLogger.php');
 
     if(isset($_GET['script'])){
 
@@ -22,6 +24,7 @@
                 return;
             }
             case "Newsletter.php":{
+                ActionsLogger::Log(WebsiteActions::Clicked, "Newsletter subscripttion.");
                 $newsController = new NewsLetterController();
                 echo $newsController->GetResponse();
                 return;
@@ -29,12 +32,22 @@
         }
     }
 
+    if(isset($_GET['sendnewsletter'])){
+        $sender = new mailSender();
+
+        $sender->SendNewsLetters("somemsg");
+        
+        return;
+    }
+
     if(isset($_GET['page'])){
         $pageName = trim($_GET['page'], '/');
         $pagePath = '';
-    
+
+        ActionsLogger::Log(WebsiteActions::TriedToVisitWebpage, $_GET['page']);
+        
         echo Pagebuilder::BuildPage($pageName);
         return;
     }
 
-   echo "Page was not found on the server.";
+   echo "Content was not found on the server.";

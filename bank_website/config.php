@@ -15,7 +15,7 @@
 
       public const FILESYS_WEBPAGE = "filesystem";
 
-      public static $VARS;
+      public static $VARS = array("myVar" => "testVar2");
 
       public static function getUserDefinedConstant($constantName) {
          $reflection = new ReflectionClass(__CLASS__);

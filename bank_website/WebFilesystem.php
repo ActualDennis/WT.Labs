@@ -22,7 +22,7 @@
                 $result = array();
                 
                 foreach($listing as $entry){
-                    if(is_dir(Config::SERVER_DIR."/".$serverPath."/".$entry) || $entry == "." || $entry == ".."){
+                    if(is_dir(Config::SERVER_DIR."/".$serverPath."/".$entry) || $entry == "." || $entry == "..") {
                         array_push($result, $entry);
                     }
                 }
