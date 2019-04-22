@@ -93,6 +93,22 @@
                 }
             } while(!empty($matches));
 
+            $styleRegex = '/{STYLE=([^,^}]*)([,])?(MEDIA=([^}]*))?}/';
+
+            do{
+                preg_match($styleRegex, $pagecontents, $matches);
+
+                if(!empty($matches)){     
+
+                    if(isset($matches[2])){
+                        $pagecontents = preg_replace($styleRegex, '<link rel="stylesheet" href="'.$matches[1].'" media="'.$matches[4].'">' , $pagecontents, 1);
+                    }else{
+                        $pagecontents = preg_replace($styleRegex, '<link rel="stylesheet" href="'.$matches[1].'">' , $pagecontents, 1);
+                    }
+                }
+
+            } while(!empty($matches));
+
             return $pagecontents;
         }
 
@@ -102,8 +118,13 @@
             $result = $db->GetSiteMapCategories();
             $db->CloseConnection();
 
-            $categoryTemplate = file_get_contents("./sitemap_folder/sitemap_categorytemplate.html");
-            $categoryEntryTemplate = file_get_contents("./sitemap_folder/sitemap_categoryEntryTemplate.html");
+            preg_match('/{SITEMAPENTRIES=([^}]*)}/', $pagecontents, $matches);
+
+            $categoryTemplate = file_get_contents($matches[1]);
+
+            preg_match('/{ENTRIES=([^}]*)}/', $categoryTemplate, $categoryEntriesMatches);
+
+            $categoryEntryTemplate = file_get_contents($categoryEntriesMatches[1]);
             $resolved = '';
 
             foreach($result as $category){
@@ -120,17 +141,17 @@
                         $entries .= $tempEntryTemplate;
                     }
     
-                    $tempCategoryTemplate = str_replace("{ENTRIES}",  $entries, $tempCategoryTemplate);
+                    $tempCategoryTemplate = preg_replace('/{ENTRIES=([^}]*)}/',  $entries, $tempCategoryTemplate);
     
                     $resolved .= $tempCategoryTemplate;
                 }
             }
 
-            return str_replace("{SITEMAPENTRIES}",  $resolved, $pagecontents);
+            return preg_replace('/{SITEMAPENTRIES=([^}]*)}/',  $resolved, $pagecontents);
         }
 
         public static function ResolveFileSystemEntriesTemplate($filesystemEntries, $pageContents) : string{
-            return str_replace("{ENTRIES}", $filesystemEntries, $pageContents);
+            return preg_replace('/{ENTRIES=([^}]*)}/', $filesystemEntries, $pageContents);
         }
 
         public static function GetEntriesTemplates($entries, $path) : ?string {
@@ -138,7 +159,11 @@
                 return $entries;
             }
 
-            $entryHtml = file_get_contents("./templates/filesystem_entry.html");
+            $pageContents = file_get_contents(Config::FILESYSTEM_HTMLPATH);
+
+            preg_match('/{ENTRIES=([^}]*)}/', $pageContents, $matches);
+
+            $entryHtml = file_get_contents($matches[1]);
             $result = '';
             $tempEntry = '';
             $current_entry = 0;
@@ -167,7 +192,7 @@
         }
         
         public static function GetMoveEntryTemplates($entries, $absolutePath) : ?string {
-            $entryHtml = file_get_contents("./templates/filesystem_move_entry.html");
+            $entryHtml = file_get_contents(Config::FILESYSTEM_MOVEENTRY_HTMLPATH);
             $result = '';
             $tempEntry = '';
             $current_entry = 0;

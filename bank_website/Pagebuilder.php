@@ -1,5 +1,6 @@
 <?php 
     require_once('PagePathFactory.php');
+    require_once('config.php');
 
 	class Pagebuilder {
         public static function BuildPage($pageName) : string {
@@ -35,9 +36,11 @@
             if($fileSystemEntries == FALSE)
                 return "Error happened while building a web-page. Probably you tried to access directory that doesn't exist.";
                 
-            $pageContents = file_get_contents("./templates/filesystem_template.html");
+            $pageContents = file_get_contents(Config::FILESYSTEM_HTMLPATH);
 
             ActionsLogger::Log(WebsiteActions::VisitedFilesystem, $_GET['loc']);
+
+            $pageContents = TemplatesHelper::ResolveDefaultTemplates(Config::FILESYSTEM_HTMLPATH);
             
             return TemplatesHelper::ResolveFileSystemEntriesTemplate($fileSystemEntries, $pageContents);
         }

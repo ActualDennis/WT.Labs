@@ -15,6 +15,10 @@
 
       public const FILESYS_WEBPAGE = "filesystem";
 
+      public const FILESYSTEM_HTMLPATH = "./templates/filesystem_template.html";
+
+      public const FILESYSTEM_MOVEENTRY_HTMLPATH = "./templates/filesystem_move_entry.html";
+
       public static $VARS = array("myVar" => "testVar2");
 
       public static function getUserDefinedConstant($constantName) {

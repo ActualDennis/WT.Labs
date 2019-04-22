@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>NotARealBank filesystem</title>
-  <link rel="stylesheet" href="/templates/style.css">
-  <link rel="stylesheet" media="(min-width: 890px)" href="/templates/style_over890px.css">
+
+  {STYLE=/templates/style.css}
+  {STYLE=/templates/style_over890px.css,MEDIA=(min-width: 890px)}
+  
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">  
 </head>
@@ -19,7 +21,7 @@
               <span class="button__text">Удалить</span>
           </button>
       </li>
-      <li class="header__tile">     <!--  data-toggle="modal" data-target="#move_modal"-->          
+      <li class="header__tile">              
           <button type="button" onclick="handle_move()" class="btn btn-primary header__tile__button">
               <i class="fas fa-arrow-up button__icon"></i>
               <span class="button__text">Переместить</span>
@@ -61,7 +63,7 @@
 
 
   <section class="entries">
-    {ENTRIES}
+    {ENTRIES=./templates/filesystem_entry.html}
   </section>
 
   <div class="modal fade" id="upload_modal" tabindex="-1" role="dialog" aria-labelledby="upload_modalLabel" aria-hidden="true">
@@ -101,7 +103,7 @@
                 </div>
 
                 <div id="move_modal_body_entries">
-
+                  
                 </div>
                 <button style="margin-top: 5%;" onclick="move_files()" class="btn btn-info">Move</button>
             </div>
