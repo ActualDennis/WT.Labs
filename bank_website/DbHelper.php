@@ -162,6 +162,12 @@ class DbHelper{
 
             $this->dbConnection->query($sql);
 
+            $Client_Id = mysqli_insert_id($this->dbConnection);
+                                                                                        //non-admin
+            $sql = "INSERT INTO `clients_roles` (`Client_Id`, `Role_Id`) VALUES ($Client_Id, 2)";
+
+            $this->dbConnection->query($sql);
+
             return true;
         }
 
@@ -206,6 +212,95 @@ class DbHelper{
                 return $userRole['Role'] == 'Admin';
             }
         }
+    }
+
+    public function CanBeRemoved($whoRemovesUsername, $targetUsername){
+        $sql =
+        "SELECT server_roles.Name,clients.Login
+        FROM clients_roles
+        INNER JOIN server_roles ON server_roles.Role_Id=clients_roles.Role_Id
+        INNER JOIN clients ON clients.Client_Id=clients_roles.Client_Id
+        WHERE (Login='$whoRemovesUsername') OR (Login='$targetUsername')";
+
+        $result = $this->dbConnection->query($sql);
+
+
+        if(mysqli_num_rows($result) != 2){
+            return false;
+        }
+
+        $usersArray = array();
+
+        while($row = $result->fetch_assoc()) {
+            array_push($usersArray, $row);
+        }
+
+        //1. Only admin can remove users; 2. admin can only remove non-admins.
+
+        if($usersArray[0]['Login'] == $whoRemovesUsername){
+            if($usersArray[0]['Name'] == 'Admin' && $usersArray[1]['Name'] !== 'Admin'){
+                return true;
+            }
+        }else {
+            if($usersArray[1]['Name'] == 'Admin' && $usersArray[0]['Name'] !== 'Admin'){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function DeleteClient($clientName){
+        $sql = "DELETE FROM `clients` WHERE Login='$clientName' ";
+        $this->dbConnection->query($sql);
+    }
+
+    public function MakeAdmin($whoChangesUsername, $targetUsername) : bool{
+        $sql =
+        "SELECT server_roles.Name,clients.Login, clients_roles.Client_Id
+        FROM clients_roles
+        INNER JOIN server_roles ON server_roles.Role_Id=clients_roles.Role_Id
+        INNER JOIN clients ON clients.Client_Id=clients_roles.Client_Id
+        WHERE (Login='$whoChangesUsername') OR (Login='$targetUsername')";
+
+        $result = $this->dbConnection->query($sql);
+
+        if(mysqli_num_rows($result) != 2){
+            return false;
+        }
+
+        $usersArray = array();
+
+        while($row = $result->fetch_assoc()) {
+            array_push($usersArray, $row);
+        }
+
+        $sql = "UPDATE clients_roles
+         SET Role_Id=1 WHERE Client_Id=";
+
+        if($usersArray[0]['Login'] == $whoChangesUsername){
+
+            if($usersArray[0]['Name'] == 'Admin' && $usersArray[1]['Name'] !== 'Admin'){
+                $sql .= $usersArray[1]['Client_Id'];
+
+                $this->dbConnection->query($sql);
+
+                return true;
+            }
+
+        }else {
+
+            if($usersArray[1]['Name'] == 'Admin' && $usersArray[0]['Name'] !== 'Admin'){
+                $sql .= $usersArray[0]['Client_Id'];
+
+                $this->dbConnection->query($sql);
+
+                return true;
+            }
+
+        }
+
+        return false;
     }
 
 }

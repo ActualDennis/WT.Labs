@@ -21,7 +21,7 @@ function change_move_chosen_entry(elementId){
 }
 
 function movefiles_movetodirectory(e){
-    var entry_name = 
+    var entry_name =
     $(e.target.parentNode)
     .find("span.entries__entry__name");
 

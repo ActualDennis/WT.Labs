@@ -60,6 +60,35 @@ class LoginController
             return json_encode(array("IsSuccessfull" => true, "ErrorMessage" => ""));
         }
 
+        if(isset($_POST['UserToRemove'])){
+            $db = new DbHelper();
+            $db->OpenConnection();
+
+            if($db->CanBeRemoved($_COOKIE[Config::COOKIE_LOGIN_NAME],$_POST['UserToRemove'])){
+                $db->DeleteClient($_POST['UserToRemove']);
+                $db->CloseConnection();
+                return json_encode(array("IsSuccessfull" => true,"ErrorMessage" => ""));
+            }
+
+            $db->CloseConnection();
+
+            return json_encode(array("IsSuccessfull" => false,"ErrorMessage" => "User couldn't be removed. Check your/target privileges"));
+        }
+
+        if(isset($_POST['UserToMakeAdmin'])){
+            $db = new DbHelper();
+            $db->OpenConnection();
+
+            if(!$db->MakeAdmin($_COOKIE[Config::COOKIE_LOGIN_NAME], $_POST['UserToMakeAdmin'])){
+                $db->CloseConnection();
+                return json_encode(array("IsSuccessfull" => false,"ErrorMessage" => "Failed to make this user an admin."));
+            }
+
+            $db->CloseConnection();
+
+            return json_encode(array("IsSuccessfull" => true,""));
+        }
+
 
         return json_encode(array("IsSuccessfull" => false,"ErrorMessage" => "Wrong POST parameters were provided."));
     }
