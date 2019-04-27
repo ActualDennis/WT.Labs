@@ -8,7 +8,7 @@
 
             if($pageFactory->IsResolvablePage($pageName)){
                 ActionsLogger::Log(WebsiteActions::Visited, $_GET['page']);
-                return TemplatesHelper::ResolveDefaultTemplates($pageFactory->GetPagePath($pageName));
+                return TemplatesHelper::ResolveDefaultTemplates(file_get_contents($pageFactory->GetPagePath($pageName)));
             }
 
             $pageNameNormalized = strtoupper($pageName);
@@ -29,6 +29,10 @@
             if($pageNameNormalized == "SITEMAP"){
                 return Pagebuilder::BuildSiteMapPage();
             }
+
+            if($pageNameNormalized == "CONTROLPANEL"){
+                return Pagebuilder::BuildControlPanelPage();
+            }
         }
 
 
@@ -40,9 +44,13 @@
 
             ActionsLogger::Log(WebsiteActions::VisitedFilesystem, $_GET['loc']);
 
-            $pageContents = TemplatesHelper::ResolveDefaultTemplates(Config::FILESYSTEM_HTMLPATH);
+            $pageContents = TemplatesHelper::ResolveDefaultTemplates(file_get_contents(Config::FILESYSTEM_HTMLPATH));
             
             return TemplatesHelper::ResolveFileSystemEntriesTemplate($fileSystemEntries, $pageContents);
+        }
+
+        private static function BuildControlPanelPage(){
+            return TemplatesHelper::GetControlPanelPage();
         }
 
         private static function BuildSiteMapPage() : ?string{

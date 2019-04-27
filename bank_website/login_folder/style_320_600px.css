@@ -119,3 +119,21 @@ body{
     border-radius: 15px;
 }
 
+.logintile__button__text{
+    font-size: 13px;
+}
+
+.loginsection__loginwrapper__regtext{
+    font-size: 13px;
+}
+
+.logintile_registerfield{
+    width: 50%;
+    height: 10%;
+    margin-top: 2%;
+    font-size: 15px;
+    border: none;
+    border:solid 1px #ccc;
+    border-radius: 15px;
+}
+

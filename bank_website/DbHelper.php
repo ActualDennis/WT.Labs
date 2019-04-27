@@ -149,4 +149,63 @@ class DbHelper{
         $this->dbConnection->query($sql);
     }
 
+    public function RegisterUser($login, $passwordHash) : bool{
+        $sql =
+        "SELECT Client_Id,Login  
+        FROM clients
+        WHERE Login='$login'";
+
+        $result = $this->dbConnection->query($sql);
+
+        if(mysqli_num_rows($result) == 0) {
+            $sql = "INSERT INTO `clients` (`Client_Id`, `Login`,`PasswordHash`) VALUES (NULL, '$login', '$passwordHash')";
+
+            $this->dbConnection->query($sql);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function CheckUserCredentials($login, $passwordHash) : bool{
+        $sql =
+        "SELECT Client_Id,Login, PasswordHash
+        FROM clients
+        WHERE (Login='$login') AND (PasswordHash='$passwordHash')";
+
+        $result = $this->dbConnection->query($sql);
+
+        return mysqli_num_rows($result) != 0;
+    }
+
+    public function GetUsersAndRoles() : array {
+        $sql =
+        "SELECT server_roles.Name,clients.Login
+        FROM clients_roles
+        INNER JOIN server_roles ON server_roles.Role_Id=clients_roles.Role_Id
+        INNER JOIN clients ON clients.Client_Id=clients_roles.Client_Id";
+
+        $result = $this->dbConnection->query($sql);
+
+        $returned = array();
+
+        while($row = $result->fetch_assoc()) {
+            $temp = array();
+            $temp["Username"] = $row['Login'];
+            $temp["Role"] = $row['Name'];
+            array_push($returned, $temp);
+        }
+
+        return $returned;
+    }
+
+    public function IsAdmin(array $usersAndRoles, string $userLogin){
+        foreach ($usersAndRoles as $userRole){
+            if($userRole['Username'] == $userLogin){
+                return $userRole['Role'] == 'Admin';
+            }
+        }
+    }
+
 }

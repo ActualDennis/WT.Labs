@@ -1,0 +1,9 @@
+.mainwrapper{
+    width: 100%;
+}
+
+.mainwrapper__entry{
+    padding: 1%;
+    display: flex;
+    flex-direction: row;
+}

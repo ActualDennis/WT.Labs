@@ -11,6 +11,15 @@ class TemplatesController{
 
     public function GetResponse(){
         if(!isset($_GET['location'])){
+
+            if(!isset($_GET['Template'])){
+                return;
+            }
+
+            if($_GET['Template'] == 'Register'){
+                return TemplatesHelper::GetLoginRegisterTemplate();
+            }
+
             return;
         }
 

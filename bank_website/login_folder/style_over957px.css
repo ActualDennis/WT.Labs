@@ -82,18 +82,27 @@ body{
 .logintile__field{
     width: 40%;
     height: 10%;
-    font-size: 20px;
+    height: 10%;
     padding: 1.5%;
     border: none; 
     border:solid 1px #ccc;
     border-radius: 15px;
 }
 
+.logintile_registerfield{
+    width: 50%;
+    height: 10%;
+    margin-top: 2%;
+    border: none;
+    border:solid 1px #ccc;
+    border-radius: 15px;
+}
 
 .loginsection__loginwrapper__servicetext{
     margin-top: 3%;
     border-radius: 20px;
 }
+
 
 .logintile__header{
     font-size: 45px;

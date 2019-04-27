@@ -5,14 +5,12 @@
 
 	class TemplatesHelper {
 
-		public static function ResolveDateTimeTemplate($pagePath) : ?string {
-            $pagecontents = file_get_contents($pagePath);
-            $pagecontents = str_replace("{DATE}", date("D/M/d"), $pagecontents);
-            return str_replace("{TIME}", date("H:i:s"), $pagecontents);
+		public static function ResolveDateTimeTemplate($pageContents) : ?string {
+            $pageContents = str_replace("{DATE}", date("D/M/d"), $pageContents);
+            return str_replace("{TIME}", date("H:i:s"), $pageContents);
         }
 
-        public static function ResolveDefaultTemplates($pagePath) : ?string {
-            $pagecontents = file_get_contents($pagePath);
+        public static function ResolveDefaultTemplates($pagecontents) : ?string {
             $pagecontents = str_replace("{DATE}", date("D/M/d"), $pagecontents);
             $pagecontents = str_replace("{TIME}", date("H:i:s"), $pagecontents);
 
@@ -110,6 +108,10 @@
             } while(!empty($matches));
 
             return $pagecontents;
+        }
+
+        public static function GetLoginRegisterTemplate(){
+            return file_get_contents("./templates/login_register_template.html");
         }
 
         public static function ResolveSitemapTemplate($pagecontents) : string{
@@ -221,6 +223,34 @@
 
             return $result;
         }
+
+        public static function GetControlPanelPage(){
+		    if(!isset($_COOKIE[Config::COOKIE_LOGIN_NAME])){
+		        return "This is an example of how unauthorized user will see this page.";
+            }
+
+            $db = new DbHelper();
+            $db->OpenConnection();
+            $usersAndRoles = $db->GetUsersAndRoles();
+            $db->CloseConnection();
+
+            if(!$db->IsAdmin($usersAndRoles, $_COOKIE[Config::COOKIE_LOGIN_NAME])){
+                return "This is an example of how non-admin will see this page.";
+            }
+
+		    $resultPage = file_get_contents("./controlpanel_folder/controlpanel.html");
+		    $entryTemplate = file_get_contents("./controlpanel_folder/controlpanel_entry.html");
+
+            $tempEntries = '';
+
+            foreach ($usersAndRoles  as $userRole){
+                $tempEntry = str_replace("{LOGIN}", $userRole['Username'], $entryTemplate);
+                $tempEntries .= str_replace("{ROLE}", $userRole['Role'],  $tempEntry);
+            }
+
+            return TemplatesHelper::ResolveDefaultTemplates(str_replace("{CONTENT}",$tempEntries, $resultPage));
+        }
+
         
 	}
 ?>

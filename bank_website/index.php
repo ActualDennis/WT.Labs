@@ -8,6 +8,7 @@
     require_once('NewsLetterController.php');
     require_once('mailSender.php');
     require_once('ActionsLogger.php');
+    require_once('LoginController.php');
 
     if(isset($_GET['script'])){
 
@@ -24,9 +25,14 @@
                 return;
             }
             case "Newsletter.php":{
-                ActionsLogger::Log(WebsiteActions::Clicked, "Newsletter subscripttion.");
+                ActionsLogger::Log(WebsiteActions::Clicked, "Newsletter subscription.");
                 $newsController = new NewsLetterController();
                 echo $newsController->GetResponse();
+                return;
+            }
+            case "Login.php":{
+                $loginController = new LoginController();
+                echo $loginController->GetResponse();
                 return;
             }
         }

@@ -19,6 +19,14 @@
 
       public const FILESYSTEM_MOVEENTRY_HTMLPATH = "./templates/filesystem_move_entry.html";
 
+      public const COOKIE_UNTRUSTED_EXPIREIN = 600;
+
+      public const COOKIE_TRUSTED_EXPIREIN = 7776000; // 90 days in seconds
+
+      public const COOKIE_TEMPORARY_EXPIREIN = 3600; // 1 hour
+
+      public  const COOKIE_LOGIN_NAME = 'bank_auth_credentials';
+
       public static $VARS = array("myVar" => "testVar2");
 
       public static function getUserDefinedConstant($constantName) {

@@ -43,21 +43,32 @@
   <section class="loginsection">
 
    <form method="POST">
-      <div class="loginsection__loginwrapper">
-      
-          <div class="loginsection__loginwrapper__logintile">
-            <h4 class="logintile__header">Вход по логину и паролю</h4>
-            <input placeholder="Логин" class="logintile__field logintile__loginfield" type="text"> 
-            <input placeholder="Пароль" class="logintile__field logintile__passwordfield" type="password"> 
+      <div class="loginsection__loginwrapper" id="login_tile_wrapper">
 
-            <div class="button logintile__button">
-                <span class="logintile__button__text">Войти</span>
-            </div>
+          <div class="loginsection__loginwrapper__logintile" id="tile_login">
+              <h4 class="logintile__header">Вход по логину и паролю</h4>
+              <input placeholder="Логин" class="logintile__field logintile__loginfield" type="text" id="login_login">
+              <input placeholder="Пароль" class="logintile__field logintile__passwordfield" type="password" id="login_password">
 
-            <a href="http://google.com" class="reference loginsection__loginwrapper__servicetext loginsection__loginwrapper__forgottext">Забыли пароль?</a>
-            <a href="http://google.com" class="reference loginsection__loginwrapper__servicetext loginsection__loginwrapper__regtext"> Зарегистрироваться</a>
+              <div>
+                  <label for="login_RememberUser">Запомнить?</label>
+                  <input type="checkbox" id="login_RememberUser">
+
+                  <label for="login_RememberUser">Чужой компьютер</label>
+                  <input type="checkbox" id="login_NotMyComputer">
+              </div>
+
+
+              <div class="button logintile__button" onclick="login()">
+                  <span class="logintile__button__text">Войти</span>
+              </div>
+
+          <button onclick="show_register_page()" type="button" style="margin-top: 2%" class="btn btn-primary">
+              <span class="button__text">Регистрация</span>
+          </button>
+
         </div>
-      
+
       </div>
    </form>
   </section>
@@ -116,6 +127,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="/scripts/newsletter.js"></script>
+<script src="/scripts/login.js"></script>
+
 
 
 </body>
