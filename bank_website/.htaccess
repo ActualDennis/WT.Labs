@@ -4,4 +4,6 @@ RewriteEngine On
 
 RewriteRule ^(about|support|login|welcome|sitemap|controlpanel)/*$ index.php?page=$1 [NC]
 
-RewriteRule ^filesystem(/*[\s\S]*) index.php?page=filesystem&loc=$1
+RewriteRule ^filesystem$ index.php?page=filesystem&loc=/
+
+RewriteRule ^filesystem(/[\s\S]*) index.php?page=filesystem&loc=$1

@@ -119,6 +119,24 @@ class DbHelper{
         return $resultArr;
     }
 
+    public function GetLogs(){
+        $sql =
+        "SELECT ActionName, UserAgent, DateVisited, website_users.IpAddress, website_actions.Name 
+        FROM usersactions
+        INNER JOIN website_users on usersactions.User_Id = website_users.User_Id
+        INNER JOIN website_actions on usersactions.nonNormalizedAction_Id = website_actions.Action_Id";
+
+        $result = $this->dbConnection->query($sql);
+
+        $resultArr = array();
+
+        while($row = $result->fetch_assoc()) {
+            array_push($resultArr, $row);
+        }
+
+        return $resultArr;
+    }
+
     public function LogAction(int $actionKey, string $action){
         $thisUserIP = $_SERVER['REMOTE_ADDR'];
 
@@ -144,7 +162,7 @@ class DbHelper{
             $userId = $row['User_Id'];
         }
 
-        $sql = "INSERT INTO `usersactions` (`Action_Id`, `User_Id`, `UserAgent`, `ActionName`, `nonNormalizedAction_Id`) VALUES (NULL, $userId, '$userAgent', '$action', $actionKey)";
+        $sql = "INSERT INTO `usersactions` (`Action_Id`, `User_Id`, `UserAgent`, `ActionName`, `nonNormalizedAction_Id`, `DateVisited`) VALUES (NULL, $userId, '$userAgent', '$action', $actionKey, CURRENT_TIMESTAMP())";
 
         $this->dbConnection->query($sql);
     }

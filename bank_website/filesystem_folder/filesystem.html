@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>NotARealBank filesystem</title>
+
+  {STYLE=/filesystem_folder/style.css}
+  {STYLE=/filesystem_folder/style_over890px.css,MEDIA=(min-width: 890px)}
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">  
+</head>
+<body>
+  <nav class="header">
+    <ul class="header__tilescontainer">
+      <li onclick="delete_files()" class="header__tile">
+          <button type="button" class="btn btn-primary header__tile__button">
+              <i class="far fa-trash-alt button__icon"></i>
+              <span class="button__text">Удалить</span>
+          </button>
+      </li>
+      <li class="header__tile">              
+          <button type="button" onclick="handle_move()" class="btn btn-primary header__tile__button">
+              <i class="fas fa-arrow-up button__icon"></i>
+              <span class="button__text">Переместить</span>
+          </button>
+      </li>
+      <li class="header__tile">
+            <button type="button" class="btn btn-primary header__tile__button" data-toggle="modal" data-target="#upload_modal">
+                <i class="fas fa-upload button__icon"></i>
+                <span class="button__text">Загрузить</span>
+            </button>
+      </li>
+    </ul>
+ </nav> 
+
+ <nav class="helper">
+  <ul class="helper__tilescontainer">
+    <li class="helper__tile helper__tile__type">
+      <div class="helper__tile__button">
+          <span  class="button__text">Тип</span>
+      </div>
+    </li>
+    <li class="helper__tile helper__tile__name">
+      <div class="helper__tile__button">
+          <span class="button__text">Имя</span>
+      </div>
+    </li>
+    <li class="helper__tile helper__tile__size">
+      <div class="helper__tile__button">
+          <span class="button__text">Размер</span>
+      </div>
+    </li>
+    <li class="helper__tile helper__tile__datemodified">
+      <div class="helper__tile__button">
+          <span class="button__text">Дата изменения</span>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+
+  <section class="entries">
+    {ENTRIES=./templates/filesystem_entry.html}
+  </section>
+
+  <div class="modal fade" id="upload_modal" tabindex="-1" role="dialog" aria-labelledby="upload_modalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="upload_modalLabel">Upload files</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="text-align: center;">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="file_upload_input">
+                  <label class="custom-file-label" for="file_upload_input">Choose file</label>
+                </div>
+
+                <button style="margin-top: 5%;" onclick="upload_file()" class="btn btn-info">Upload</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="move_modal" tabindex="-1" role="dialog" aria-labelledby="move_modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Move files/folders</h5>
+              <button type="button" id="move_close_button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" id="move_modal_body" style="text-align: center;">
+                  
+                <div class="spinner-grow text-success" role="status" id="spinner_move">
+                    <span class="sr-only">Loading...</span>
+                </div>
+
+                <div id="move_modal_body_entries">
+                  
+                </div>
+                <button style="margin-top: 5%;" onclick="move_files()" class="btn btn-info">Move</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="/scripts/main.js"></script>
+  <script src="/scripts/move.js"></script>
+</body>
+</html>

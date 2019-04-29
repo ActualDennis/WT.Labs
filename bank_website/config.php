@@ -15,7 +15,7 @@
 
       public const FILESYS_WEBPAGE = "filesystem";
 
-      public const FILESYSTEM_HTMLPATH = "./templates/filesystem_template.html";
+      public const FILESYSTEM_HTMLPATH = "./filesystem_folder/filesystem.html";
 
       public const FILESYSTEM_MOVEENTRY_HTMLPATH = "./templates/filesystem_move_entry.html";
 

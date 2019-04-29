@@ -1,5 +1,13 @@
 <?php 
     class FileSystemActionResult{
+        public function __construct(bool $IsSuccessfull, string $ErrorMsg, string $Redirect_url, string $Message = "")
+        {
+            $this->IsSuccessfull = $IsSuccessfull;
+            $this->ErrorMsg = $ErrorMsg;
+            $this->Redirect_url = $Redirect_url;
+            $this->Message = $Message;
+        }
+
         public $IsSuccessfull;
 
         public $ErrorMsg;
@@ -46,59 +54,29 @@
 
             if($IsManualDotsHandlingUsed == 'true'){
                 if($destination == "."){
-                    $result = new FileSystemActionResult();
-                    $result->IsSuccessfull = true;
-                    $result->ErrorMsg = "";
-                    $result->Redirect_url = Config::SERVER_FILESYSTEM_LOCATION.$clientRelativePath;
-
-                    return $result;
+                    return new FileSystemActionResult(true, "",  Config::SERVER_FILESYSTEM_LOCATION.$clientRelativePath);
                 }
 
                 if($destination == ".."){
 
                     if($clientRelativePath == "/" || $clientRelativePath == ""){
-                        $result = new FileSystemActionResult();
-                        $result->IsSuccessfull = true;
-                        $result->ErrorMsg = "";
-                        $result->Redirect_url = Config::SERVER_FILESYSTEM_LOCATION;
-
-                        return $result;
+                        return new FileSystemActionResult(true, "",  Config::SERVER_FILESYSTEM_LOCATION);
                     }
 
                     $temp = substr($normalizedDestination, 0 , strrpos($normalizedDestination, "/"));
-                    $result = new FileSystemActionResult();
-                    $result->IsSuccessfull = true;
-                    $result->ErrorMsg = "";
-                    $result->Redirect_url = substr($temp, 0 , strrpos($temp, "/"));
-
-                    return $result;
+                    return new FileSystemActionResult(true, "",  substr($temp, 0 , strrpos($temp, "/")));
                 }
             }
 
             if(is_dir($localPath)){
-                $result = new FileSystemActionResult();
-                $result->IsSuccessfull = true;
-                $result->ErrorMsg = "";
-                $result->Redirect_url = $normalizedDestination;
-
-                return $result;
+                return new FileSystemActionResult(true, "",  $normalizedDestination);
             }
 
             if(is_file($localPath)){
-                $result = new FileSystemActionResult();
-                $result->IsSuccessfull = false;
-                $result->ErrorMsg =  $destination." is a file.";
-                $result->Redirect_url = "";
-
-                return $result;
+               return new FileSystemActionResult(false, $destination." is a file.",  "");
             }
 
-            $result = new FileSystemActionResult();
-            $result->IsSuccessfull = false;
-            $result->ErrorMsg =  "Directory doesn't exist.";
-            $result->Redirect_url = "";
-
-            return $result;
+            return new FileSystemActionResult(false, "Directory doesn't exist.",  "");
         }
 
         public function DeleteFilesystemEntries($entries, $clientRelativePath) : FileSystemActionResult{
@@ -129,18 +107,12 @@
             }
 
             if(!$isAllFilesDeleted){
-                $result = new FileSystemActionResult();
-                $result->IsSuccessfull = false;
-                $result->ErrorMsg =  "Not all files were deleted.";
+                return new FileSystemActionResult(false, "Not all files were deleted.",  "");
             }
             else{
-                $result = new FileSystemActionResult();
-                $result->IsSuccessfull = true;
-                $result->ErrorMsg =  "";
+                return new FileSystemActionResult(true, "",  "");
             }
-            
-            return $result;
-            
+
         }
 
         public function CreateFile($clientRelativePath) : FileSystemActionResult{
@@ -149,16 +121,13 @@
             if(!file_exists(Config::SERVER_DIR.$clientRelativePath."/".$_FILES['file']['name'])){
 
                 if(!move_uploaded_file($_FILES['file']['tmp_name'], Config::SERVER_DIR.$clientRelativePath."/".$_FILES['file']['name'])){
-                    $result->Message = "Error happened while moving tmp file to server's directory.: ".$_FILES['file']['name'];
-                    return $result;
+                    return new FileSystemActionResult(false, "", "", "Error happened while moving tmp file to server's directory.: ".$_FILES['file']['name']);
                 }
 
-                $result->Message = "Successfully uploaded file: ".$_FILES['file']['name'];
-                return $result;
+                return new FileSystemActionResult(true, "", "", "Successfully uploaded file: ".$_FILES['file']['name']);
             }
 
-            $result->Message = "File already exists: ".$_FILES['file']['name'];
-            return $result;
+            return new FileSystemActionResult(false, "", "", "File already exists: ".$_FILES['file']['name']);
 
         }
 
@@ -189,15 +158,11 @@
                WebFilesystem::RemoveDirectory(Config::SERVER_DIR."/".$clientLocation."/".$entry);
             }
 
-            $result = new FileSystemActionResult();
-
             if($errorsHappened){
-                $result->Message = "Errors happened while moving files.";
-                return $result;
+                return new FileSystemActionResult(true, "", "", "Errors happened while moving files.");
+            }else{
+                return new FileSystemActionResult(true, "", "", "Successfully moved files.");
             }
-
-            $result->Message = "Successfully moved files.";
-            return $result;
         }
 
 

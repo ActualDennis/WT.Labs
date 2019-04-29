@@ -239,7 +239,7 @@
             }
 
 		    $resultPage = file_get_contents("./controlpanel_folder/controlpanel.html");
-		    $entryTemplate = file_get_contents("./controlpanel_folder/controlpanel_entry.html");
+		    $entryTemplate = file_get_contents("./templates/controlpanel_entry.html");
 
             $tempEntries = '';
 

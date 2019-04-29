@@ -46,6 +46,14 @@
         return;
     }
 
+    if(isset($_GET['sendlogs'])){
+        $sender = new mailSender();
+
+        $sender->SendLogs();
+
+        return;
+    }
+
     if(isset($_GET['page'])){
         $pageName = trim($_GET['page'], '/');
         $pagePath = '';
