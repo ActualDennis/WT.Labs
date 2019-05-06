@@ -225,8 +225,10 @@
         }
 
         public static function GetControlPanelPage(){
-		    if(!isset($_COOKIE[Config::COOKIE_LOGIN_NAME])){
-		        return "This is an example of how unauthorized user will see this page.";
+            session_start(['read_and_close'  => true]);
+
+		    if(!isset($_SESSION['login'])){
+		        return "This is an example of how unknown user will see this page.";
             }
 
             $db = new DbHelper();
@@ -234,7 +236,9 @@
             $usersAndRoles = $db->GetUsersAndRoles();
             $db->CloseConnection();
 
-            if(!$db->IsAdmin($usersAndRoles, $_COOKIE[Config::COOKIE_LOGIN_NAME])){
+            session_start();
+
+            if(!$db->IsAdmin($usersAndRoles, $_SESSION['login'])){
                 return "This is an example of how non-admin will see this page.";
             }
 

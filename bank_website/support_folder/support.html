@@ -109,7 +109,7 @@
 
     { DB  =   "Test_Var" }
 
-    {IF "return { CONFIG  =   "SERVER_WEBHOST_RELATIVE" } == 'localhost';"}
+    {IF "SERVER_WEBHOST_RELATIVE" == 'localhost'}
     <span>This is local host!</span>
     {ELSE} 
         <span>This is not a local host!</span>
